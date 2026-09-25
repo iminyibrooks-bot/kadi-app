@@ -35,7 +35,6 @@
             padding: 0;
             user-select: none;
             -webkit-user-select: none;
-            touch-action: manipulation;
         }
 
         body {
@@ -46,6 +45,7 @@
             height: 100vh;
             height: 100dvh;
             width: 100vw;
+            touch-action: manipulation;
         }
 
         #landing-screen {
@@ -225,15 +225,15 @@
 
         .deck-container, .discard-container {
             position: relative;
-            width: clamp(80px, 18vw, 105px);
-            height: clamp(115px, 26vw, 150px);
+            width: clamp(75px, 17vw, 95px);
+            height: clamp(105px, 24vw, 135px);
         }
 
         .card-slot {
             width: 100%;
             height: 100%;
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             position: absolute;
             inset: 0;
         }
@@ -242,17 +242,18 @@
             width: 100%;
             height: 100%;
             background: #fffefb;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid #b5a895;
             position: absolute;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.85);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.85);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 8px;
+            padding: 6px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             cursor: pointer;
+            overflow: hidden;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -276,11 +277,11 @@
             line-height: 0.9;
         }
 
-        .card-value { font-size: clamp(1.1rem, 3.5vw, 1.4rem); }
-        .card-suit { font-size: clamp(1rem, 3vw, 1.2rem); }
+        .card-value { font-size: clamp(0.95rem, 3vw, 1.25rem); }
+        .card-suit { font-size: clamp(0.85rem, 2.5vw, 1.05rem); }
 
         .card-center-suit {
-            font-size: clamp(2.2rem, 6.5vw, 3.2rem);
+            font-size: clamp(1.8rem, 5.5vw, 2.6rem);
             align-self: center;
             opacity: 0.95;
         }
@@ -314,20 +315,20 @@
             justify-content: center;
             width: 80vw;
             max-width: 450px;
-            height: 55px;
+            height: 50px;
         }
 
         .opponent-hand .card {
             position: relative;
-            margin-left: clamp(-28px, -4.5vw, -12px);
-            width: clamp(38px, 9vw, 52px);
-            height: clamp(52px, 13vw, 72px);
+            margin-left: clamp(-24px, -4vw, -10px);
+            width: clamp(34px, 8vw, 46px);
+            height: clamp(48px, 11vw, 64px);
         }
 
-        /* PLAYER SEAT (BOTTOM) — ANCHORED SAFELY ABOVE PHONE NAV BAR */
+        /* PLAYER SEAT (BOTTOM) — SCROLLABLE HORIZONTAL SWIPE FIX */
         .seat-bottom {
             position: absolute;
-            bottom: max(28px, env(safe-area-inset-bottom) + 16px);
+            bottom: max(26px, env(safe-area-inset-bottom) + 12px);
             left: 0;
             right: 0;
             display: flex;
@@ -338,13 +339,15 @@
 
         .player-hand {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-end;
-            width: 96vw;
-            max-width: 800px;
-            height: clamp(120px, 26vw, 155px);
-            padding: 4px;
+            width: 100vw;
+            max-width: 750px;
+            height: clamp(115px, 25vw, 145px);
+            padding: 4px 20px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
             scrollbar-width: none;
             margin-bottom: 10px;
         }
@@ -353,17 +356,17 @@
 
         .player-hand .card {
             position: relative;
-            margin-left: clamp(-32px, -6vw, -14px);
+            margin-left: clamp(-30px, -5.5vw, -14px);
             flex-shrink: 0;
             transform-origin: bottom center;
-            width: clamp(75px, 16vw, 102px);
-            height: clamp(105px, 23vw, 145px);
+            width: clamp(72px, 15vw, 96px);
+            height: clamp(100px, 21vw, 132px);
         }
 
         .player-hand .card:first-child { margin-left: 0; }
 
         .player-hand .card.selected {
-            transform: translateY(-22px) scale(1.1) !important;
+            transform: translateY(-20px) scale(1.08) !important;
             border: 2px solid var(--accent-gold);
             box-shadow: 0 0 16px var(--accent-gold);
             z-index: 110 !important;
@@ -374,7 +377,7 @@
             justify-content: space-around;
             gap: 10px;
             width: 94%;
-            max-width: 500px;
+            max-width: 480px;
         }
 
         .hud-btn {
@@ -382,10 +385,10 @@
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid #555;
             color: #fff;
-            padding: 11px 6px;
-            border-radius: 14px;
+            padding: 10px 6px;
+            border-radius: 12px;
             font-weight: 900;
-            font-size: clamp(0.7rem, 2.2vw, 0.82rem);
+            font-size: clamp(0.68rem, 2.1vw, 0.8rem);
             cursor: pointer;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.85);
@@ -397,7 +400,7 @@
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.8rem, 2.6vw, 0.94rem);
+            font-size: clamp(0.78rem, 2.5vw, 0.92rem);
             box-shadow: 0 4px 14px rgba(0, 240, 255, 0.5);
         }
 
@@ -409,7 +412,7 @@
             background: var(--accent-neon);
             color: #fff;
             font-family: 'Permanent Marker', cursive;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             padding: 3px 12px;
             border-radius: 14px;
             box-shadow: 0 0 14px var(--accent-neon);
@@ -521,7 +524,7 @@
             <div class="opponent-hand" id="opponent-hand"></div>
         </div>
 
-        <!-- ANCHORED ABOVE PHONE NAV BAR -->
+        <!-- SCROLLABLE SWIPE FIX APPLIED -->
         <div class="seat-bottom">
             <div class="seat-tag" id="player-tag">You</div>
             <div class="player-hand" id="player-hand"></div>
