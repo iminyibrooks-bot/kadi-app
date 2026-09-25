@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KADI — 4-Player Pitch Arena</title>
+    <title>KADI — Authentic Kenyan Street Rules</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Cinzel:wght@700&family=Montserrat:wght@500;700;900&display=swap');
@@ -209,46 +209,45 @@
             color: var(--accent-cyan);
         }
 
-        /* CENTER PLAY AREA */
+        /* PLAY AREA */
         .play-area {
             position: absolute;
-            top: 50%;
+            top: 44%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 20px;
+            gap: 16px;
             align-items: center;
             z-index: 5;
         }
 
         .deck-container, .discard-container {
             position: relative;
-            width: clamp(85px, 20vw, 110px);
-            height: clamp(120px, 28vw, 155px);
+            width: clamp(75px, 18vw, 95px);
+            height: clamp(105px, 25vw, 133px);
         }
 
         .card-slot {
             width: 100%;
             height: 100%;
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             position: absolute;
             inset: 0;
         }
 
-        /* MASSIVE CARDS & ICONS */
         .card {
             width: 100%;
             height: 100%;
             background: #fffefb;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid #b5a895;
             position: absolute;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 8px;
+            padding: 6px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             cursor: pointer;
@@ -272,19 +271,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 0.9;
+            line-height: 0.85;
         }
 
-        .card-value { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
-        .card-suit { font-size: clamp(1rem, 3vw, 1.3rem); }
+        .card-value { font-size: clamp(0.9rem, 3vw, 1.2rem); }
+        .card-suit { font-size: clamp(0.8rem, 2.5vw, 1rem); }
 
         .card-center-suit {
-            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            font-size: clamp(1.8rem, 5.5vw, 2.6rem);
             align-self: center;
             opacity: 0.95;
         }
 
-        /* 4-PLAYER PITCH CORNER SEATS */
+        /* OPPONENT SEAT (TOP) */
         .seat-top {
             position: absolute;
             top: 45px;
@@ -296,28 +295,34 @@
             z-index: 10;
         }
 
-        .seat-left {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%) rotate(90deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
+        .seat-tag {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 3px;
+            text-transform: uppercase;
         }
 
-        .seat-right {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%) rotate(-90deg);
+        .opponent-hand {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
+            justify-content: center;
+            width: 80vw;
+            max-width: 450px;
+            height: 55px;
         }
 
+        .opponent-hand .card {
+            position: relative;
+            margin-left: clamp(-28px, -5vw, -12px);
+            width: clamp(38px, 9vw, 52px);
+            height: clamp(52px, 13vw, 72px);
+        }
+
+        /* PLAYER SEAT (BOTTOM) — STRICT STACK ORDER: Cards above, HUD below */
         .seat-bottom {
             position: absolute;
             bottom: 6px;
@@ -329,42 +334,14 @@
             z-index: 10;
         }
 
-        .seat-tag {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid var(--accent-gold);
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .opponent-hand {
-            display: flex;
-            justify-content: center;
-            width: 70vw;
-            max-width: 400px;
-            height: 60px;
-        }
-
-        .opponent-hand .card {
-            position: relative;
-            margin-left: clamp(-30px, -5vw, -15px);
-            width: clamp(42px, 10vw, 60px);
-            height: clamp(60px, 14vw, 85px);
-        }
-
-        /* PLAYER HAND & HUGE CARDS */
         .player-hand {
             display: flex;
             justify-content: center;
             align-items: flex-end;
             width: 96vw;
-            max-width: 850px;
-            height: clamp(110px, 26vw, 155px);
-            padding: 4px;
+            max-width: 800px;
+            height: clamp(100px, 24vw, 140px);
+            padding: 2px;
             overflow-x: auto;
             scrollbar-width: none;
             margin-bottom: 4px;
@@ -374,28 +351,28 @@
 
         .player-hand .card {
             position: relative;
-            margin-left: clamp(-35px, -6vw, -14px);
+            margin-left: clamp(-30px, -5.5vw, -12px);
             flex-shrink: 0;
             transform-origin: bottom center;
-            width: clamp(72px, 17vw, 105px);
-            height: clamp(100px, 24vw, 148px);
+            width: clamp(65px, 15vw, 95px);
+            height: clamp(90px, 22vw, 132px);
         }
 
         .player-hand .card:first-child { margin-left: 0; }
 
         .player-hand .card.selected {
-            transform: translateY(-18px) scale(1.1) !important;
+            transform: translateY(-16px) scale(1.08) !important;
             border: 2px solid var(--accent-gold);
-            box-shadow: 0 0 16px var(--accent-gold);
+            box-shadow: 0 0 14px var(--accent-gold);
             z-index: 110 !important;
         }
 
         .action-hud {
             display: flex;
             justify-content: space-around;
-            gap: 8px;
+            gap: 6px;
             width: 94%;
-            max-width: 520px;
+            max-width: 480px;
         }
 
         .hud-btn {
@@ -403,10 +380,10 @@
             background: rgba(0, 0, 0, 0.92);
             border: 1px solid #555;
             color: #fff;
-            padding: 9px 6px;
+            padding: 8px 4px;
             border-radius: 12px;
             font-weight: 900;
-            font-size: clamp(0.62rem, 2.2vw, 0.78rem);
+            font-size: clamp(0.6rem, 2vw, 0.74rem);
             cursor: pointer;
             text-align: center;
             box-shadow: 0 3px 8px rgba(0,0,0,0.8);
@@ -418,22 +395,22 @@
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.72rem, 2.5vw, 0.88rem);
-            box-shadow: 0 3px 12px rgba(0, 240, 255, 0.4);
+            font-size: clamp(0.7rem, 2.4vmax, 0.82rem);
+            box-shadow: 0 3px 10px rgba(0, 240, 255, 0.4);
         }
 
         .stack-counter {
             position: absolute;
-            top: -38px;
+            top: -34px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent-neon);
             color: #fff;
             font-family: 'Permanent Marker', cursive;
-            font-size: 1.2rem;
-            padding: 3px 12px;
+            font-size: 1.1rem;
+            padding: 2px 10px;
             border-radius: 12px;
-            box-shadow: 0 0 14px var(--accent-neon);
+            box-shadow: 0 0 12px var(--accent-neon);
             display: none;
         }
 
@@ -442,16 +419,16 @@
             top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 0, 85, 0.92);
+            background: rgba(255, 0, 85, 0.9);
             color: #fff;
             font-weight: 900;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 12px;
-            font-size: clamp(0.6rem, 2vw, 0.75rem);
+            font-size: clamp(0.6rem, 1.8vw, 0.72rem);
             display: none;
             text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 380px;
             z-index: 30;
         }
 
@@ -463,17 +440,17 @@
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--accent-gold);
             color: #fff;
-            padding: 6px 16px;
+            padding: 5px 14px;
             border-radius: 16px;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
             z-index: 200;
             text-align: center;
             width: 85%;
-            max-width: 350px;
+            max-width: 330px;
         }
 
         #toast.show {
@@ -488,7 +465,7 @@
         <div class="spray-bg"></div>
         <div class="title-container">
             <h1 class="graffiti-title">KADI</h1>
-            <div class="graffiti-sub">4-Player Pitch Arena</div>
+            <div class="graffiti-sub">Kenyan Street Rules</div>
         </div>
 
         <div class="menu-card">
@@ -506,8 +483,11 @@
                 </select>
             </div>
 
-            <button class="btn" onclick="startSinglePlayer()">Single Player (Vs 3 AI)</button>
-            <button class="btn btn-secondary" onclick="createRoom()">Create 4-Player Room</button>
+            <button class="btn" onclick="startSinglePlayer()">Single Player (Vs CPU AI)</button>
+
+            <div style="text-align: center; font-size: 0.7rem; color: #777; margin: 2px 0;">— P2P MULTIPLAYER (UP TO 4 PLAYERS) —</div>
+
+            <button class="btn btn-secondary" onclick="createRoom()">Create P2P Room</button>
             <input type="text" id="join-room-id" placeholder="Enter Room Code">
             <button class="btn btn-secondary" onclick="joinRoom()">Join Room</button>
         </div>
@@ -516,13 +496,12 @@
     <div id="game-screen">
         <div class="top-bar">
             <button class="back-btn" onclick="returnToHome()">◄ LEAVE</button>
-            <div class="room-tag" id="room-display">Pitch Game</div>
+            <div class="room-tag" id="room-display">Local Game</div>
             <div id="turn-indicator">YOUR TURN</div>
         </div>
 
         <div id="qa-status-banner">QUESTION ACTIVE: DROP AN ANSWER (4-7, 9, 10)</div>
 
-        <!-- CENTER STACK -->
         <div class="play-area">
             <div class="deck-container" onclick="drawFromDeck()">
                 <div class="card-slot"></div>
@@ -535,22 +514,12 @@
             </div>
         </div>
 
-        <!-- 4 PITCH CORNER / SIDE SEATS -->
         <div class="seat-top">
-            <div class="seat-tag" id="p2-tag">North AI</div>
-            <div class="opponent-hand" id="p2-hand"></div>
+            <div class="seat-tag" id="opponent-tag">Opponent</div>
+            <div class="opponent-hand" id="opponent-hand"></div>
         </div>
 
-        <div class="seat-left">
-            <div class="seat-tag" id="p3-tag">West AI</div>
-            <div class="opponent-hand" id="p3-hand" style="transform: scale(0.8);"></div>
-        </div>
-
-        <div class="seat-right">
-            <div class="seat-tag" id="p4-tag">East AI</div>
-            <div class="opponent-hand" id="p4-hand" style="transform: scale(0.8);"></div>
-        </div>
-
+        <!-- STRICT DOM LAYOUT: Cards above action HUD buttons -->
         <div class="seat-bottom">
             <div class="seat-tag" id="player-tag">You</div>
             <div class="player-hand" id="player-hand"></div>
@@ -590,6 +559,13 @@
                 gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'penalty') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(190, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
             }
         }
 
@@ -598,25 +574,28 @@
         const PLAIN_ANSWERS = ['4','5','6','7','9','10'];
         
         let deck = [];
-        let hands = [[], [], [], []]; // 0: Player, 1: North, 2: West, 3: East
+        let players = []; // Array of { id, name, hand, isAi }
+        let myPlayerIndex = 0;
         let discardPile = [];
         let selectedIndices = [];
         
-        let turn = 0; // 0 = Player, 1 = North, 2 = West, 3 = East
+        let currentTurnIndex = 0;
         let penaltyStack = 0;
         let lastKickbackValue = null;
         let isQuestionActive = false;
         let isSinglePlayer = true;
-        let playerNames = ['You', 'North AI', 'West AI', 'East AI'];
-        let declaredNikoKadi = [false, false, false, false];
+        let declaredNikoKadi = {};
 
-        let peer = null, connections = [];
+        let peer = null, hostConn = null, peerConnections = [];
 
         function changeArenaTheme(theme) {
             document.body.className = theme;
         }
 
         function returnToHome() {
+            if (hostConn) { hostConn.close(); hostConn = null; }
+            peerConnections.forEach(c => c.close());
+            peerConnections = [];
             if (peer) { peer.destroy(); peer = null; }
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('landing-screen').style.display = 'flex';
@@ -640,7 +619,14 @@
 
         function startSinglePlayer() {
             isSinglePlayer = true;
-            playerNames[0] = document.getElementById('player-name').value || 'Player1';
+            const playerName = document.getElementById('player-name').value || 'Player1';
+            
+            players = [
+                { id: 'p1', name: playerName, hand: [], isAi: false },
+                { id: 'ai1', name: 'CPU AI', hand: [], isAi: true }
+            ];
+            myPlayerIndex = 0;
+
             document.getElementById('landing-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'block';
             initGame();
@@ -648,9 +634,11 @@
 
         function initGame() {
             createDeck();
-            for (let i = 0; i < 4; i++) {
-                hands[i] = deck.splice(0, 4);
-            }
+            declaredNikoKadi = {};
+            players.forEach(p => {
+                p.hand = deck.splice(0, 4);
+                declaredNikoKadi[p.id] = false;
+            });
             
             let top = deck.pop();
             while (['2','3','8','J','Q','K','A','JOKER'].includes(top.value)) {
@@ -658,32 +646,35 @@
                 top = deck.pop();
             }
             discardPile = [top];
-            turn = 0;
+            currentTurnIndex = 0;
             penaltyStack = 0;
             isQuestionActive = false;
             render();
         }
 
         function render() {
-            document.getElementById('player-tag').innerText = `${playerNames[0]} (YOU)`;
-            document.getElementById('p2-tag').innerText = playerNames[1];
-            document.getElementById('p3-tag').innerText = playerNames[2];
-            document.getElementById('p4-tag').innerText = playerNames[3];
+            const me = players[myPlayerIndex];
+            const opp = players[(myPlayerIndex + 1) % players.length];
 
-            // Player Hand
+            document.getElementById('player-tag').innerText = `${me.name} (YOU)`;
+            document.getElementById('opponent-tag').innerText = opp.name;
+
             const pHandEl = document.getElementById('player-hand');
             pHandEl.innerHTML = '';
-            hands[0].forEach((card, index) => {
+            me.hand.forEach((card, index) => {
                 const cardEl = createCardUI(card);
                 if (selectedIndices.includes(index)) cardEl.classList.add('selected');
                 cardEl.onclick = () => toggleSelectCard(index);
                 pHandEl.appendChild(cardEl);
             });
 
-            // Opponent Hands (North, West, East)
-            renderOpponentHand('p2-hand', hands[1].length);
-            renderOpponentHand('p3-hand', hands[2].length);
-            renderOpponentHand('p4-hand', hands[3].length);
+            const oHandEl = document.getElementById('opponent-hand');
+            oHandEl.innerHTML = '';
+            for (let i = 0; i < opp.hand.length; i++) {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card card-back';
+                oHandEl.appendChild(cardEl);
+            }
 
             const discardEl = document.getElementById('discard-pile');
             discardEl.querySelectorAll('.card').forEach(c => c.remove());
@@ -698,22 +689,12 @@
             document.getElementById('qa-status-banner').style.display = isQuestionActive ? 'block' : 'none';
 
             const turnEl = document.getElementById('turn-indicator');
-            if (turn === 0) {
+            if (currentTurnIndex === myPlayerIndex) {
                 turnEl.innerText = "YOUR TURN";
                 turnEl.style.color = "var(--accent-cyan)";
             } else {
-                turnEl.innerText = `${playerNames[turn].toUpperCase()}'S TURN`;
+                turnEl.innerText = `${players[currentTurnIndex].name.toUpperCase()}'S TURN`;
                 turnEl.style.color = "var(--accent-neon)";
-            }
-        }
-
-        function renderOpponentHand(elementId, count) {
-            const el = document.getElementById(elementId);
-            el.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                const cardEl = document.createElement('div');
-                cardEl.className = 'card card-back';
-                el.appendChild(cardEl);
             }
         }
 
@@ -741,14 +722,15 @@
         }
 
         function toggleSelectCard(index) {
-            if (turn !== 0) return;
+            if (currentTurnIndex !== myPlayerIndex) return;
             playSound('card');
 
+            const me = players[myPlayerIndex];
             if (selectedIndices.includes(index)) {
                 selectedIndices = selectedIndices.filter(i => i !== index);
             } else {
                 if (selectedIndices.length > 0) {
-                    if (hands[0][selectedIndices[0]].value !== hands[0][index].value) {
+                    if (me.hand[selectedIndices[0]].value !== me.hand[index].value) {
                         showToast("Multi-cards MUST share the EXACT same Number!");
                         return;
                     }
@@ -773,44 +755,60 @@
         }
 
         function playSelectedCards() {
-            if (turn !== 0 || selectedIndices.length === 0) return;
-            executePlay(selectedIndices, 0);
+            if (currentTurnIndex !== myPlayerIndex || selectedIndices.length === 0) return;
+
+            if (!isSinglePlayer && myPlayerIndex !== 0) {
+                hostConn.send({ type: 'REQ_PLAY', indices: selectedIndices });
+                selectedIndices = [];
+                return;
+            }
+
+            executePlay(selectedIndices, myPlayerIndex);
             selectedIndices = [];
         }
 
         function executePlay(indices, playerIdx) {
-            const hand = hands[playerIdx];
-            const selectedCards = indices.map(i => hand[i]);
+            const player = players[playerIdx];
+            const selectedCards = indices.map(i => player.hand[i]);
             const topCard = discardPile[discardPile.length - 1];
 
             if (isQuestionActive) {
                 if (!PLAIN_ANSWERS.includes(selectedCards[0].value)) {
-                    if (playerIdx === 0) showToast("Must play a Plain Answer Card (4-7, 9, 10)!");
+                    if (playerIdx === myPlayerIndex) showToast("Must play a Plain Answer Card (4-7, 9, 10)!");
                     return;
                 }
                 isQuestionActive = false;
             } else if (!isValidMove(selectedCards[0], topCard)) {
-                if (playerIdx === 0) showToast("Invalid Move!");
+                if (playerIdx === myPlayerIndex) {
+                    showToast(penaltyStack > 0 ? `Must match Kickback card (${lastKickbackValue}) or draw!` : "Invalid Move!");
+                    playSound('penalty');
+                }
                 return;
             }
 
             playSound('slam');
             indices.sort((a, b) => b - a).forEach(i => {
-                discardPile.push(hand.splice(i, 1)[0]);
+                discardPile.push(player.hand.splice(i, 1)[0]);
             });
 
             processPowerCards(selectedCards);
 
-            if (hand.length === 0) {
-                alert(`${playerNames[playerIdx]} WON THE MATCH!`);
-                returnToHome();
+            if (player.hand.length === 0) {
+                alert(`${player.name} WON THE MATCH!`);
+                if (isSinglePlayer || myPlayerIndex === 0) {
+                    returnToHome();
+                }
                 return;
             }
 
             render();
 
-            if (isSinglePlayer && turn !== 0) {
-                setTimeout(aiTurn, 900);
+            if (isSinglePlayer) {
+                if (players[currentTurnIndex].isAi) {
+                    setTimeout(aiTurn, 1000);
+                }
+            } else if (myPlayerIndex === 0) {
+                broadcastState();
             }
         }
 
@@ -824,46 +822,56 @@
 
             const lastCard = cards[cards.length - 1];
             if (lastCard.value !== 'J' && !isQuestionActive) {
-                turn = (turn + 1) % 4;
+                currentTurnIndex = (currentTurnIndex + 1) % players.length;
             }
         }
 
         function drawFromDeck() {
-            if (turn !== 0) return;
-            executeDraw(0);
+            if (currentTurnIndex !== myPlayerIndex) return;
+
+            if (!isSinglePlayer && myPlayerIndex !== 0) {
+                hostConn.send({ type: 'REQ_DRAW' });
+                return;
+            }
+
+            executeDraw(myPlayerIndex);
         }
 
         function executeDraw(playerIdx) {
             playSound('card');
-            const hand = hands[playerIdx];
+            const player = players[playerIdx];
 
             if (penaltyStack > 0) {
                 for (let i = 0; i < penaltyStack; i++) {
                     if (deck.length === 0) replenishDeck();
-                    if (deck.length > 0) hand.push(deck.pop());
+                    if (deck.length > 0) player.hand.push(deck.pop());
                 }
                 penaltyStack = 0;
                 lastKickbackValue = null;
-                turn = (turn + 1) % 4;
+                currentTurnIndex = (currentTurnIndex + 1) % players.length;
             } else {
                 if (deck.length === 0) replenishDeck();
                 const drawn = deck.pop();
-                hand.push(drawn);
+                player.hand.push(drawn);
 
                 if (isQuestionActive) {
                     if (!PLAIN_ANSWERS.includes(drawn.value)) {
                         isQuestionActive = false;
-                        turn = (turn + 1) % 4;
+                        currentTurnIndex = (currentTurnIndex + 1) % players.length;
                     }
                 } else {
-                    turn = (turn + 1) % 4;
+                    currentTurnIndex = (currentTurnIndex + 1) % players.length;
                 }
             }
 
             render();
 
-            if (isSinglePlayer && turn !== 0) {
-                setTimeout(aiTurn, 900);
+            if (isSinglePlayer) {
+                if (players[currentTurnIndex].isAi) {
+                    setTimeout(aiTurn, 1000);
+                }
+            } else if (myPlayerIndex === 0) {
+                broadcastState();
             }
         }
 
@@ -875,35 +883,59 @@
         }
 
         function aiTurn() {
-            if (turn === 0 || !isSinglePlayer) return;
+            const ai = players[currentTurnIndex];
+            if (!ai.isAi || !isSinglePlayer) return;
             const topCard = discardPile[discardPile.length - 1];
-            const aiHand = hands[turn];
             let targetIdx = -1;
 
             if (isQuestionActive) {
-                targetIdx = aiHand.findIndex(c => PLAIN_ANSWERS.includes(c.value));
+                targetIdx = ai.hand.findIndex(c => PLAIN_ANSWERS.includes(c.value));
             } else {
-                targetIdx = aiHand.findIndex(c => isValidMove(c, topCard));
+                targetIdx = ai.hand.findIndex(c => isValidMove(c, topCard));
             }
 
             if (targetIdx !== -1) {
-                executePlay([targetIdx], turn);
+                executePlay([targetIdx], currentTurnIndex);
             } else {
-                executeDraw(turn);
+                executeDraw(currentTurnIndex);
             }
         }
 
         function declareNikoKadi() {
-            if (hands[0].length <= 2) {
-                declaredNikoKadi[0] = true;
-                showToast("Declared NIKO KADI!");
+            const me = players[myPlayerIndex];
+            if (me.hand.length <= 2) {
+                declaredNikoKadi[me.id] = true;
+                showToast("You declared NIKO KADI!");
+                if (!isSinglePlayer && myPlayerIndex !== 0) {
+                    hostConn.send({ type: 'REQ_DECL_NIKO' });
+                }
             } else {
-                showToast("Too many cards to declare KADI!");
+                showToast("Cannot declare NIKO KADI with >2 cards!");
             }
         }
 
         function snitchOpponent() {
-            showToast("MSHIKE checked!");
+            const opp = players[(myPlayerIndex + 1) % players.length];
+            if (opp.hand.length <= 2 && !declaredNikoKadi[opp.id]) {
+                showToast("MSHIKE! Caught slipping! +2 Penalty!");
+                if (isSinglePlayer) {
+                    for (let i = 0; i < 2; i++) {
+                        if (deck.length === 0) replenishDeck();
+                        if (deck.length > 0) opp.hand.push(deck.pop());
+                    }
+                    render();
+                } else if (myPlayerIndex === 0) {
+                    for (let i = 0; i < 2; i++) {
+                        if (deck.length === 0) replenishDeck();
+                        if (deck.length > 0) opp.hand.push(deck.pop());
+                    }
+                    broadcastState();
+                } else {
+                    hostConn.send({ type: 'SNITCH' });
+                }
+            } else {
+                showToast("Opponent is clear!");
+            }
         }
 
         function showToast(msg) {
@@ -913,12 +945,113 @@
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
+        /* P2P MULTIPLAYER (UP TO 4 PLAYERS) */
         function createRoom() {
-            alert("P2P 4-Player rooms initialized via PeerJS network cluster.");
+            const playerName = document.getElementById('player-name').value || 'HostPlayer';
+            isSinglePlayer = false;
+            myPlayerIndex = 0;
+
+            const roomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+            peer = new Peer(roomCode);
+
+            peer.on('open', (id) => {
+                document.getElementById('landing-screen').style.display = 'none';
+                document.getElementById('game-screen').style.display = 'block';
+                document.getElementById('room-display').innerText = `Room: ${id}`;
+                showToast("Room created! Waiting for up to 3 players...");
+                
+                players = [{ id: id, name: playerName, hand: [], isAi: false }];
+                initGame();
+            });
+
+            peer.on('connection', (conn) => {
+                if (players.length >= 4) {
+                    conn.close();
+                    return;
+                }
+                peerConnections.push(conn);
+
+                conn.on('data', (data) => {
+                    if (data.type === 'JOIN') {
+                        if (players.length < 4) {
+                            players.push({ id: conn.peer, name: data.name, hand: [], isAi: false });
+                            declaredNikoKadi[conn.peer] = false;
+                            showToast(`${data.name} joined the table! (${players.length}/4)`);
+                            initGame(); // Re-deal for new player count
+                            broadcastState();
+                        }
+                    } else if (data.type === 'REQ_PLAY') {
+                        const pIdx = players.findIndex(p => p.id === conn.peer);
+                        if (pIdx !== -1) executePlay(data.indices, pIdx);
+                    } else if (data.type === 'REQ_DRAW') {
+                        const pIdx = players.findIndex(p => p.id === conn.peer);
+                        if (pIdx !== -1) executeDraw(pIdx);
+                    } else if (data.type === 'REQ_DECL_NIKO') {
+                        declaredNikoKadi[conn.peer] = true;
+                    } else if (data.type === 'SNITCH') {
+                        const pIdx = players.findIndex(p => p.id === conn.peer);
+                        const targetIdx = (pIdx + 1) % players.length;
+                        const target = players[targetIdx];
+                        if (target.hand.length <= 2 && !declaredNikoKadi[target.id]) {
+                            for (let i = 0; i < 2; i++) {
+                                if (deck.length === 0) replenishDeck();
+                                if (deck.length > 0) target.hand.push(deck.pop());
+                            }
+                            broadcastState();
+                        }
+                    }
+                });
+            });
         }
 
         function joinRoom() {
-            alert("Joining 4-Player room cluster.");
+            const roomCode = document.getElementById('join-room-id').value.toUpperCase();
+            if (!roomCode) return alert("Enter Room Code!");
+            
+            const playerName = document.getElementById('player-name').value || 'GuestPlayer';
+            isSinglePlayer = false;
+
+            peer = new Peer();
+            peer.on('open', () => {
+                hostConn = peer.connect(roomCode);
+                
+                hostConn.on('open', () => {
+                    hostConn.send({ type: 'JOIN', name: playerName });
+                    document.getElementById('landing-screen').style.display = 'none';
+                    document.getElementById('game-screen').style.display = 'block';
+                    document.getElementById('room-display').innerText = `Room: ${roomCode}`;
+                });
+
+                hostConn.on('data', (data) => {
+                    if (data.type === 'STATE_SYNC') {
+                        currentTurnIndex = data.currentTurnIndex;
+                        penaltyStack = data.penaltyStack;
+                        lastKickbackValue = data.lastKickbackValue;
+                        isQuestionActive = data.isQuestionActive;
+                        discardPile = data.discardPile;
+                        players = data.players;
+                        myPlayerIndex = players.findIndex(p => p.id === peer.id);
+                        if (myPlayerIndex === -1) myPlayerIndex = 0;
+                        render();
+                    }
+                });
+            });
+        }
+
+        function broadcastState() {
+            if (isSinglePlayer || peerConnections.length === 0) return;
+
+            const payload = {
+                type: 'STATE_SYNC',
+                currentTurnIndex,
+                penaltyStack,
+                lastKickbackValue,
+                isQuestionActive,
+                discardPile,
+                players
+            };
+
+            peerConnections.forEach(conn => conn.send(payload));
         }
     </script>
 </body>
