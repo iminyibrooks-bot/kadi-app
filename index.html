@@ -184,13 +184,14 @@
             position: relative;
             background: var(--bg-arena);
             box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.95);
+            overflow: hidden;
         }
 
         .top-bar {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -236,7 +237,7 @@
 
         .play-area {
             position: absolute;
-            top: 42%;
+            top: 38%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -330,15 +331,17 @@
         }
 
         .seat-top {
-            top: 48px;
+            top: 50px;
             left: 50%;
             transform: translateX(-50%);
         }
 
         .seat-bottom {
-            bottom: 75px;
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
+            width: 100%;
+            align-items: center;
         }
 
         .player-hand {
@@ -347,7 +350,7 @@
             align-items: flex-end;
             width: 96vw;
             max-width: 800px;
-            height: clamp(115px, 30vw, 170px);
+            height: clamp(110px, 26vw, 150px);
             padding: 5px;
             overflow-x: auto;
             scrollbar-width: none;
@@ -360,14 +363,14 @@
             margin-left: clamp(-30px, -6vw, -12px);
             flex-shrink: 0;
             transform-origin: bottom center;
-            width: clamp(70px, 18vw, 105px);
-            height: clamp(98px, 25vw, 147px);
+            width: clamp(65px, 16vw, 95px);
+            height: clamp(90px, 22vw, 135px);
         }
 
         .player-hand .card:first-child { margin-left: 0; }
 
         .player-hand .card.selected {
-            transform: translateY(-20px) scale(1.1) !important;
+            transform: translateY(-16px) scale(1.1) !important;
             border: 2px solid var(--accent-gold);
             box-shadow: 0 0 15px var(--accent-gold);
             z-index: 110 !important;
@@ -378,19 +381,19 @@
             justify-content: center;
             width: 90vw;
             max-width: 600px;
-            height: 70px;
+            height: 60px;
         }
 
         .opponent-hand .card {
             position: relative;
-            margin-left: clamp(-45px, -8vw, -25px);
-            width: clamp(48px, 12vw, 70px);
-            height: clamp(68px, 17vw, 98px);
+            margin-left: clamp(-40px, -7vw, -22px);
+            width: clamp(42px, 10vw, 60px);
+            height: clamp(58px, 14vw, 85px);
         }
 
         .stack-counter {
             position: absolute;
-            top: -42px;
+            top: -38px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent-neon);
@@ -405,27 +408,30 @@
 
         .action-hud {
             position: absolute;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
+            bottom: 8px;
+            left: 10px;
+            right: 10px;
             display: flex;
             justify-content: space-around;
-            gap: 8px;
+            gap: 6px;
             z-index: 20;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .hud-btn {
             flex: 1;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             border: 1px solid #555;
             color: #fff;
-            padding: 10px 4px;
-            border-radius: 20px;
+            padding: 8px 4px;
+            border-radius: 16px;
             font-weight: 900;
-            font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+            font-size: clamp(0.6rem, 2.2vw, 0.78rem);
             cursor: pointer;
             backdrop-filter: blur(6px);
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
         }
 
         .hud-btn-niko {
@@ -442,21 +448,21 @@
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.75rem, 3vw, 0.95rem);
-            box-shadow: 0 4px 14px rgba(0, 240, 255, 0.4);
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            box-shadow: 0 4px 12px rgba(0, 240, 255, 0.4);
         }
 
         #qa-status-banner {
             position: absolute;
-            top: 78px;
+            top: 70px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 0, 85, 0.9);
             color: #fff;
             font-weight: 900;
-            padding: 6px 16px;
-            border-radius: 16px;
-            font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+            padding: 5px 14px;
+            border-radius: 14px;
+            font-size: clamp(0.6rem, 2vw, 0.75rem);
             display: none;
             text-align: center;
             width: 90%;
@@ -467,16 +473,16 @@
 
         #toast {
             position: absolute;
-            top: 60px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%) translateY(-20px);
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--accent-gold);
             color: #fff;
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 6px 16px;
+            border-radius: 18px;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
@@ -553,8 +559,8 @@
         </div>
 
         <div class="seat seat-bottom">
-            <div class="player-hand" id="player-hand"></div>
             <div class="seat-tag" id="player-tag">You</div>
+            <div class="player-hand" id="player-hand"></div>
         </div>
 
         <div class="action-hud">
