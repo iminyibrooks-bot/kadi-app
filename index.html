@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KADI — Authentic Kenyan Street Rules</title>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Cinzel:wght@700&family=Montserrat:wght@500;700;900&display=swap');
+
+        :root {
+            --bg-arena: 
+                linear-gradient(rgba(15, 9, 5, 0.60), rgba(15, 9, 5, 0.85)),
+                url('assets/graffiti_bg.jpg') center/cover no-repeat;
+            --accent-neon: #ff0055;
+            --accent-gold: #e6b800;
+            --accent-cyan: #00f0ff;
+        }
+
+        body.arena-graffiti {
+            --bg-arena: 
+                linear-gradient(rgba(15, 9, 5, 0.60), rgba(15, 9, 5, 0.85)),
+                url('assets/graffiti_bg.jpg') center/cover no-repeat;
+        }
+
+        body.arena-cyber {
+            --bg-arena: 
+                linear-gradient(rgba(10, 15, 30, 0.60), rgba(5, 8, 18, 0.85)),
+                url('assets/cyber_bg.jpg') center/cover no-repeat;
+        }
+
+        body.arena-kibanda {
+            --bg-arena: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d0a08;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #landing-screen {
+            position: absolute;
+            inset: 0;
+            z-index: 100;
+            background: 
+                linear-gradient(rgba(13, 9, 6, 0.70), rgba(13, 9, 6, 0.88)),
+                url('assets/home_bg.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .spray-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.22;
+            background-image: 
+                radial-gradient(circle at 15% 25%, #ff0055 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, #00f0ff 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, #e6b800 0%, transparent 60%);
+        }
+
+        .title-container {
+            position: relative;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .graffiti-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(3.2rem, 10vw, 5.5rem);
+            color: #fff;
+            text-shadow: 
+                3px 3px 0px var(--accent-neon),
+                6px 6px 0px #000,
+                0 0 25px rgba(255, 0, 85, 0.7);
+            transform: rotate(-3deg);
+            letter-spacing: 3px;
+        }
+
+        .graffiti-sub {
+            font-size: clamp(0.8rem, 3vw, 1.1rem);
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: -6px;
+            transform: rotate(1deg);
+        }
+
+        .menu-card {
+            background: rgba(18, 12, 8, 0.88);
+            border: 2px solid rgba(230, 184, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+            backdrop-filter: blur(14px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-group label {
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        input, select {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #444;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            outline: none;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 12px rgba(230, 184, 0, 0.4);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-gold), #c68a00);
+            color: #000;
+            font-weight: 900;
+            font-size: 0.95rem;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            box-shadow: 0 4px 0 #7a5500;
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #7a5500;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #333, #1a1a1a);
+            color: #fff;
+            box-shadow: 0 4px 0 #0d0d0d;
+        }
+
+        #game-screen {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: var(--bg-arena);
+            box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.95);
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .room-tag {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+        }
+
+        #turn-indicator {
+            font-weight: 900;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+        }
+
+        .play-area {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .deck-container, .discard-container {
+            position: relative;
+            width: clamp(75px, 20vw, 110px);
+            height: clamp(105px, 28vw, 154px);
+        }
+
+        .card-slot {
+            width: 100%;
+            height: 100%;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            position: absolute;
+            inset: 0;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            background: #fffefb;
+            border-radius: 10px;
+            border: 1px solid #b5a895;
+            position: absolute;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card.red { color: #b81d1d; }
+        .card.black { color: #1a1a1a; }
+
+        .card-back {
+            background: 
+                radial-gradient(circle at 50% 50%, #9e1b1b 0%, #610d0d 100%),
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 2px, transparent 2px, transparent 8px);
+            border: 2px solid #f2e3c9;
+            box-shadow: inset 0 0 0 1px #7a1212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-corner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.85;
+        }
+
+        .card-value { font-size: clamp(0.9rem, 2.8vw, 1.25rem); }
+        .card-suit { font-size: clamp(0.8rem, 2.2vw, 1.1rem); }
+
+        .card-center-suit {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            align-self: center;
+            opacity: 0.9;
+        }
+
+        .seat {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .seat-tag {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--accent-gold);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .seat-top {
+            top: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .seat-bottom {
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .player-hand {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            width: 96vw;
+            max-width: 800px;
+            height: clamp(115px, 30vw, 170px);
+            padding: 5px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .player-hand::-webkit-scrollbar { display: none; }
+
+        .player-hand .card {
+            position: relative;
+            margin-left: clamp(-30px, -6vw, -12px);
+            flex-shrink: 0;
+            transform-origin: bottom center;
+            width: clamp(70px, 18vw, 105px);
+            height: clamp(98px, 25vw, 147px);
+        }
+
+        .player-hand .card:first-child { margin-left: 0; }
+
+        .player-hand .card.selected {
+            transform: translateY(-20px) scale(1.1) !important;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold);
+            z-index: 110 !important;
+        }
+
+        .opponent-hand {
+            display: flex;
+            justify-content: center;
+            width: 90vw;
+            max-width: 600px;
+            height: 70px;
+        }
+
+        .opponent-hand .card {
+            position: relative;
+            margin-left: clamp(-45px, -8vw, -25px);
+            width: clamp(48px, 12vw, 70px);
+            height: clamp(68px, 17vw, 98px);
+        }
+
+        .stack-counter {
+            position: absolute;
+            top: -42px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-neon);
+            color: #fff;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.1rem;
+            padding: 2px 12px;
+            border-radius: 14px;
+            box-shadow: 0 0 15px var(--accent-neon);
+            display: none;
+        }
+
+        .action-hud {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-around;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .hud-btn {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #555;
+            color: #fff;
+            padding: 10px 4px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            text-align: center;
+        }
+
+        .hud-btn-niko {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .hud-btn-snitch {
+            border-color: var(--accent-neon);
+            color: var(--accent-neon);
+        }
+
+        .hud-btn-play {
+            background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
+            border: none;
+            color: #000;
+            font-size: clamp(0.75rem, 3vw, 0.95rem);
+            box-shadow: 0 4px 14px rgba(0, 240, 255, 0.4);
+        }
+
+        #qa-status-banner {
+            position: absolute;
+            top: 78px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 0, 85, 0.9);
+            color: #fff;
+            font-weight: 900;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+            display: none;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 15px rgba(255,0,85,0.6);
+            z-index: 30;
+        }
+
+        #toast {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid var(--accent-gold);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 200;
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body class="arena-graffiti">
+
+    <div id="landing-screen">
+        <div class="spray-bg"></div>
+        <div class="title-container">
+            <h1 class="graffiti-title">KADI</h1>
+            <div class="graffiti-sub">Kenyan Street Poker</div>
+        </div>
+
+        <div class="menu-card">
+            <div class="input-group">
+                <label>Player Tag</label>
+                <input type="text" id="player-name" value="Player1">
+            </div>
+
+            <div class="input-group">
+                <label>Select Arena</label>
+                <select id="arena-select" onchange="changeArenaTheme(this.value)">
+                    <option value="arena-graffiti">Street Graffiti Arena</option>
+                    <option value="arena-cyber">Cyber Street Arena</option>
+                    <option value="arena-kibanda">Dark Slate Kibanda</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="startSinglePlayer()">Single Player (Vs AI)</button>
+
+            <div style="text-align: center; font-size: 0.7rem; color: #777; margin: 2px 0;">— P2P MULTIPLAYER —</div>
+
+            <button class="btn btn-secondary" onclick="createRoom()">Create P2P Room</button>
+            <input type="text" id="join-room-id" placeholder="Enter Room Code">
+            <button class="btn btn-secondary" onclick="joinRoom()">Join Room</button>
+        </div>
+    </div>
+
+    <div id="game-screen">
+        <div class="top-bar">
+            <div class="room-tag" id="room-display">Local Game</div>
+            <div id="turn-indicator">YOUR TURN</div>
+        </div>
+
+        <div id="qa-status-banner">QUESTION ACTIVE: DROP AN ANSWER (4-7, 9, 10)</div>
+
+        <div class="play-area">
+            <div class="deck-container" onclick="drawFromDeck()">
+                <div class="card-slot"></div>
+                <div class="card card-back" id="deck-card"></div>
+            </div>
+
+            <div class="discard-container" id="discard-pile">
+                <div class="card-slot"></div>
+                <div class="stack-counter" id="stack-counter">+2</div>
+            </div>
+        </div>
+
+        <div class="seat seat-top">
+            <div class="seat-tag" id="opponent-tag">Waiting...</div>
+            <div class="opponent-hand" id="opponent-hand"></div>
+        </div>
+
+        <div class="seat seat-bottom">
+            <div class="player-hand" id="player-hand"></div>
+            <div class="seat-tag" id="player-tag">You</div>
+        </div>
+
+        <div class="action-hud">
+            <button class="hud-btn hud-btn-niko" onclick="declareNikoKadi()">NIKO KADI</button>
+            <button class="hud-btn hud-btn-play" onclick="playSelectedCards()">PLAY CARDS</button>
+            <button class="hud-btn hud-btn-snitch" onclick="snitchOpponent()">MSHIKE!</button>
+        </div>
+    </div>
+
+    <div id="toast">Message Toast</div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'card') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(420, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } else if (type === 'slam') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(160, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.6, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'penalty') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(190, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            }
+        }
+
+        const SUITS = ['♠', '♥', '♦', '♣'];
+        const VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+        const PLAIN_ANSWERS = ['4','5','6','7','9','10'];
+        
+        let deck = [];
+        let hostHand = [];
+        let guestHand = [];
+        let discardPile = [];
+        let selectedIndices = [];
+        
+        let turn = 'host';
+        let myRole = 'host';
+        let hostName = 'Host';
+        let guestName = 'Waiting...';
+
+        let penaltyStack = 0;
+        let lastKickbackValue = null;
+        let isQuestionActive = false;
+        let isSinglePlayer = true;
+        let declaredNikoKadi = { host: false, guest: false };
+
+        let peer = null, conn = null;
+
+        function changeArenaTheme(theme) {
+            document.body.className = theme;
+        }
+
+        function createDeck() {
+            deck = [];
+            for (let suit of SUITS) {
+                for (let val of VALUES) {
+                    deck.push({ suit, value: val });
+                }
+            }
+            deck.push({ suit: '★', value: 'JOKER' });
+            deck.push({ suit: '★', value: 'JOKER' });
+            
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
+
+        function startSinglePlayer() {
+            isSinglePlayer = true;
+            hostName = document.getElementById('player-name').value || 'Player1';
+            guestName = 'CPU AI';
+            document.getElementById('landing-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            initGame();
+        }
+
+        function initGame() {
+            createDeck();
+            hostHand = deck.splice(0, 4);
+            guestHand = deck.splice(0, 4);
+            
+            let top = deck.pop();
+            while (['2','3','8','J','Q','K','A','JOKER'].includes(top.value)) {
+                deck.unshift(top);
+                top = deck.pop();
+            }
+            discardPile = [top];
+            turn = 'host';
+            myRole = 'host';
+            penaltyStack = 0;
+            isQuestionActive = false;
+            render();
+        }
+
+        function render() {
+            const myName = myRole === 'host' ? hostName : guestName;
+            const oppName = myRole === 'host' ? guestName : hostName;
+            const myHand = myRole === 'host' ? hostHand : guestHand;
+            const oppHand = myRole === 'host' ? guestHand : hostHand;
+
+            document.getElementById('player-tag').innerText = `${myName} (YOU)`;
+            document.getElementById('opponent-tag').innerText = oppName;
+
+            const pHandEl = document.getElementById('player-hand');
+            pHandEl.innerHTML = '';
+            myHand.forEach((card, index) => {
+                const cardEl = createCardUI(card);
+                if (selectedIndices.includes(index)) cardEl.classList.add('selected');
+                cardEl.onclick = () => toggleSelectCard(index);
+                pHandEl.appendChild(cardEl);
+            });
+
+            const oHandEl = document.getElementById('opponent-hand');
+            oHandEl.innerHTML = '';
+            let count = Array.isArray(oppHand) ? oppHand.length : oppHand;
+            for (let i = 0; i < count; i++) {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card card-back';
+                oHandEl.appendChild(cardEl);
+            }
+
+            const discardEl = document.getElementById('discard-pile');
+            discardEl.querySelectorAll('.card').forEach(c => c.remove());
+            if (discardPile.length > 0) {
+                discardEl.appendChild(createCardUI(discardPile[discardPile.length - 1]));
+            }
+
+            const stackEl = document.getElementById('stack-counter');
+            stackEl.style.display = penaltyStack > 0 ? 'block' : 'none';
+            stackEl.innerText = `+${penaltyStack}`;
+
+            document.getElementById('qa-status-banner').style.display = isQuestionActive ? 'block' : 'none';
+
+            const turnEl = document.getElementById('turn-indicator');
+            if (turn === myRole) {
+                turnEl.innerText = "YOUR TURN";
+                turnEl.style.color = "var(--accent-cyan)";
+            } else {
+                turnEl.innerText = `${oppName.toUpperCase()}'S TURN`;
+                turnEl.style.color = "var(--accent-neon)";
+            }
+        }
+
+        function createCardUI(card) {
+            const cardEl = document.createElement('div');
+            const isRed = card.suit === '♥' || card.suit === '♦';
+            cardEl.className = `card ${isRed ? 'red' : 'black'}`;
+
+            if (card.value === 'JOKER') {
+                cardEl.innerHTML = `<div class="card-value">JK</div><div class="card-center-suit">🤡</div><div class="card-value">JK</div>`;
+            } else {
+                cardEl.innerHTML = `
+                    <div class="card-corner">
+                        <span class="card-value">${card.value}</span>
+                        <span class="card-suit">${card.suit}</span>
+                    </div>
+                    <div class="card-center-suit">${card.suit}</div>
+                    <div class="card-corner" style="transform: rotate(180deg);">
+                        <span class="card-value">${card.value}</span>
+                        <span class="card-suit">${card.suit}</span>
+                    </div>
+                `;
+            }
+            return cardEl;
+        }
+
+        function toggleSelectCard(index) {
+            if (turn !== myRole) return;
+            playSound('card');
+
+            const myHand = myRole === 'host' ? hostHand : guestHand;
+            if (selectedIndices.includes(index)) {
+                selectedIndices = selectedIndices.filter(i => i !== index);
+            } else {
+                if (selectedIndices.length > 0) {
+                    if (myHand[selectedIndices[0]].value !== myHand[index].value) {
+                        showToast("Multi-cards MUST share the EXACT same Number!");
+                        return;
+                    }
+                }
+                selectedIndices.push(index);
+            }
+            render();
+        }
+
+        function isValidMove(card, topCard) {
+            if (penaltyStack > 0) {
+                if (lastKickbackValue === '2' && card.value === '2') return true;
+                if (lastKickbackValue === '3' && card.value === '3') return true;
+                if (lastKickbackValue === 'JOKER' && (card.value === 'JOKER' || card.value === 'A')) return true;
+                return false;
+            }
+
+            if (topCard.value === 'JOKER') return true;
+            if (card.value === 'JOKER' || card.value === 'A') return true;
+
+            return (card.suit === topCard.suit) || (card.value === topCard.value);
+        }
+
+        function playSelectedCards() {
+            if (turn !== myRole || selectedIndices.length === 0) return;
+
+            if (myRole === 'guest') {
+                conn.send({ type: 'REQ_PLAY', indices: selectedIndices });
+                selectedIndices = [];
+                return;
+            }
+
+            executePlay(selectedIndices, 'host');
+            selectedIndices = [];
+        }
+
+        function executePlay(indices, role) {
+            const hand = role === 'host' ? hostHand : guestHand;
+            const selectedCards = indices.map(i => hand[i]);
+            const topCard = discardPile[discardPile.length - 1];
+
+            if (isQuestionActive) {
+                if (!PLAIN_ANSWERS.includes(selectedCards[0].value)) {
+                    if (role === myRole) showToast("Must play a Plain Answer Card (4-7, 9, 10)!");
+                    return;
+                }
+                isQuestionActive = false;
+            } else if (!isValidMove(selectedCards[0], topCard)) {
+                if (role === myRole) {
+                    showToast(penaltyStack > 0 ? `Must match Kickback card (${lastKickbackValue}) or draw!` : "Invalid Move!");
+                    playSound('penalty');
+                }
+                return;
+            }
+
+            playSound('slam');
+            indices.sort((a, b) => b - a).forEach(i => {
+                discardPile.push(hand.splice(i, 1)[0]);
+            });
+
+            processPowerCards(selectedCards, role);
+
+            if (hand.length === 0) {
+                alert(`${role === 'host' ? hostName : guestName} WON THE GAME!`);
+                broadcastState();
+                location.reload();
+                return;
+            }
+
+            render();
+
+            if (isSinglePlayer) {
+                if (turn === 'guest') setTimeout(aiTurn, 1000);
+            } else {
+                broadcastState();
+            }
+        }
+
+        function processPowerCards(cards, role) {
+            cards.forEach(card => {
+                if (card.value === '2') { penaltyStack += 2; lastKickbackValue = '2'; }
+                if (card.value === '3') { penaltyStack += 3; lastKickbackValue = '3'; }
+                if (card.value === 'JOKER') { penaltyStack += 5; lastKickbackValue = 'JOKER'; }
+                if (card.value === 'Q' || card.value === '8') { isQuestionActive = true; }
+            });
+
+            const lastCard = cards[cards.length - 1];
+            if (lastCard.value !== 'J' && !isQuestionActive) {
+                turn = turn === 'host' ? 'guest' : 'host';
+            }
+        }
+
+        function drawFromDeck() {
+            if (turn !== myRole) return;
+
+            if (myRole === 'guest') {
+                conn.send({ type: 'REQ_DRAW' });
+                return;
+            }
+
+            executeDraw('host');
+        }
+
+        function executeDraw(role) {
+            playSound('card');
+            const hand = role === 'host' ? hostHand : guestHand;
+
+            if (penaltyStack > 0) {
+                for (let i = 0; i < penaltyStack; i++) {
+                    if (deck.length === 0) replenishDeck();
+                    if (deck.length > 0) hand.push(deck.pop());
+                }
+                penaltyStack = 0;
+                lastKickbackValue = null;
+                turn = turn === 'host' ? 'guest' : 'host';
+            } else {
+                if (deck.length === 0) replenishDeck();
+                const drawn = deck.pop();
+                hand.push(drawn);
+
+                if (isQuestionActive) {
+                    if (!PLAIN_ANSWERS.includes(drawn.value)) {
+                        isQuestionActive = false;
+                        turn = turn === 'host' ? 'guest' : 'host';
+                    }
+                } else {
+                    turn = turn === 'host' ? 'guest' : 'host';
+                }
+            }
+
+            render();
+
+            if (isSinglePlayer) {
+                if (turn === 'guest') setTimeout(aiTurn, 1000);
+            } else {
+                broadcastState();
+            }
+        }
+
+        function replenishDeck() {
+            if (discardPile.length <= 1) return;
+            const top = discardPile.pop();
+            deck = discardPile.reverse();
+            discardPile = [top];
+        }
+
+        function aiTurn() {
+            if (turn !== 'guest' || !isSinglePlayer) return;
+            const topCard = discardPile[discardPile.length - 1];
+            let targetIdx = -1;
+
+            if (isQuestionActive) {
+                targetIdx = guestHand.findIndex(c => PLAIN_ANSWERS.includes(c.value));
+            } else {
+                targetIdx = guestHand.findIndex(c => isValidMove(c, topCard));
+            }
+
+            if (targetIdx !== -1) {
+                executePlay([targetIdx], 'guest');
+            } else {
+                executeDraw('guest');
+            }
+        }
+
+        function declareNikoKadi() {
+            const hand = myRole === 'host' ? hostHand : guestHand;
+            if (hand.length <= 2) {
+                declaredNikoKadi[myRole] = true;
+                showToast("You declared NIKO KADI!");
+                if (conn && myRole === 'guest') conn.send({ type: 'REQ_DECL_NIKO' });
+            } else {
+                showToast("Cannot declare NIKO KADI with >2 cards!");
+            }
+        }
+
+        function snitchOpponent() {
+            const oppRole = myRole === 'host' ? 'guest' : 'host';
+            const oppHand = oppRole === 'host' ? hostHand : guestHand;
+            
+            if (oppHand.length <= 2 && !declaredNikoKadi[oppRole]) {
+                showToast("MSHIKE! Caught slipping! +2 Penalty!");
+                if (isSinglePlayer) {
+                    for (let i = 0; i < 2; i++) {
+                        if (deck.length === 0) replenishDeck();
+                        if (deck.length > 0) guestHand.push(deck.pop());
+                    }
+                    render();
+                } else {
+                    conn.send({ type: 'SNITCH' });
+                }
+            } else {
+                showToast("Opponent is clear!");
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function createRoom() {
+            hostName = document.getElementById('player-name').value || 'HostPlayer';
+            myRole = 'host';
+            isSinglePlayer = false;
+
+            const roomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+            peer = new Peer(roomCode);
+
+            peer.on('open', (id) => {
+                document.getElementById('landing-screen').style.display = 'none';
+                document.getElementById('game-screen').style.display = 'block';
+                document.getElementById('room-display').innerText = `Room: ${id}`;
+                showToast("Waiting for opponent to join...");
+                initGame();
+            });
+
+            peer.on('connection', (c) => {
+                conn = c;
+                setupConnection();
+            });
+        }
+
+        function joinRoom() {
+            const roomCode = document.getElementById('join-room-id').value.toUpperCase();
+            if (!roomCode) return alert("Enter Room Code!");
+            
+            guestName = document.getElementById('player-name').value || 'GuestPlayer';
+            myRole = 'guest';
+            isSinglePlayer = false;
+
+            peer = new Peer();
+            peer.on('open', () => {
+                conn = peer.connect(roomCode);
+                setupConnection();
+                document.getElementById('landing-screen').style.display = 'none';
+                document.getElementById('game-screen').style.display = 'block';
+                document.getElementById('room-display').innerText = `Room: ${roomCode}`;
+            });
+        }
+
+        function setupConnection() {
+            conn.on('open', () => {
+                if (myRole === 'guest') {
+                    conn.send({ type: 'JOIN', name: guestName });
+                }
+            });
+
+            conn.on('data', (data) => {
+                if (myRole === 'host') {
+                    if (data.type === 'JOIN') {
+                        guestName = data.name;
+                        showToast(`${guestName} has joined the table!`);
+                        broadcastState();
+                    } else if (data.type === 'REQ_PLAY') {
+                        executePlay(data.indices, 'guest');
+                    } else if (data.type === 'REQ_DRAW') {
+                        executeDraw('guest');
+                    } else if (data.type === 'REQ_DECL_NIKO') {
+                        declaredNikoKadi.guest = true;
+                    } else if (data.type === 'SNITCH') {
+                        if (hostHand.length <= 2 && !declaredNikoKadi.host) {
+                            showToast("YOU GOT SNITCHED! +2 Penalty!");
+                            for (let i = 0; i < 2; i++) {
+                                if (deck.length === 0) replenishDeck();
+                                if (deck.length > 0) hostHand.push(deck.pop());
+                            }
+                            broadcastState();
+                        }
+                    }
+                } else {
+                    if (data.type === 'STATE_SYNC') {
+                        turn = data.turn;
+                        penaltyStack = data.penaltyStack;
+                        lastKickbackValue = data.lastKickbackValue;
+                        isQuestionActive = data.isQuestionActive;
+                        discardPile = data.discardPile;
+                        hostHand = data.hostHandCount;
+                        guestHand = data.guestHand;
+                        hostName = data.hostName;
+                        guestName = data.guestName;
+                        render();
+                    }
+                }
+            });
+        }
+
+        function broadcastState() {
+            if (!conn) return;
+
+            let statePayload = {
+                type: 'STATE_SYNC',
+                turn,
+                penaltyStack,
+                lastKickbackValue,
+                isQuestionActive,
+                discardPile,
+                hostHandCount: hostHand.length,
+                guestHand: guestHand,
+                hostName,
+                guestName
+            };
+
+            conn.send(statePayload);
+        }
+    </script>
+</body>
+</html>
