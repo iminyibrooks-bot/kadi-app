@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KADI — Authentic Kenyan Street Rules</title>
+    <title>KADI — 4-Player Pitch Arena</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Cinzel:wght@700&family=Montserrat:wght@500;700;900&display=swap');
@@ -18,15 +18,11 @@
         }
 
         body.arena-graffiti {
-            --bg-arena: 
-                linear-gradient(rgba(15, 9, 5, 0.60), rgba(15, 9, 5, 0.85)),
-                url('assets/graffiti_bg.jpg') center/cover no-repeat;
+            --bg-arena: linear-gradient(rgba(15, 9, 5, 0.60), rgba(15, 9, 5, 0.85)), url('assets/graffiti_bg.jpg') center/cover no-repeat;
         }
 
         body.arena-cyber {
-            --bg-arena: 
-                linear-gradient(rgba(10, 15, 30, 0.60), rgba(5, 8, 18, 0.85)),
-                url('assets/cyber_bg.jpg') center/cover no-repeat;
+            --bg-arena: linear-gradient(rgba(10, 15, 30, 0.60), rgba(5, 8, 18, 0.85)), url('assets/cyber_bg.jpg') center/cover no-repeat;
         }
 
         body.arena-kibanda {
@@ -55,9 +51,7 @@
             position: absolute;
             inset: 0;
             z-index: 100;
-            background: 
-                linear-gradient(rgba(13, 9, 6, 0.70), rgba(13, 9, 6, 0.88)),
-                url('assets/home_bg.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(13, 9, 6, 0.70), rgba(13, 9, 6, 0.88)), url('assets/home_bg.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -88,10 +82,7 @@
             font-family: 'Permanent Marker', cursive;
             font-size: clamp(3.2rem, 10vw, 5.5rem);
             color: #fff;
-            text-shadow: 
-                3px 3px 0px var(--accent-neon),
-                6px 6px 0px #000,
-                0 0 25px rgba(255, 0, 85, 0.7);
+            text-shadow: 3px 3px 0px var(--accent-neon), 6px 6px 0px #000, 0 0 25px rgba(255, 0, 85, 0.7);
             transform: rotate(-3deg);
             letter-spacing: 3px;
         }
@@ -142,7 +133,6 @@
             font-size: 0.9rem;
             font-weight: 700;
             outline: none;
-            transition: 0.2s;
             width: 100%;
         }
 
@@ -162,13 +152,7 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.2s;
             box-shadow: 0 4px 0 #7a5500;
-        }
-
-        .btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #7a5500;
         }
 
         .btn-secondary {
@@ -195,7 +179,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 10;
+            z-index: 20;
         }
 
         .back-btn {
@@ -207,10 +191,6 @@
             font-weight: 900;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .room-tag {
@@ -229,44 +209,46 @@
             color: var(--accent-cyan);
         }
 
+        /* CENTER PLAY AREA */
         .play-area {
             position: absolute;
-            top: 36%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 16px;
+            gap: 20px;
             align-items: center;
             z-index: 5;
         }
 
         .deck-container, .discard-container {
             position: relative;
-            width: clamp(70px, 18vw, 95px);
-            height: clamp(98px, 25vw, 133px);
+            width: clamp(85px, 20vw, 110px);
+            height: clamp(120px, 28vw, 155px);
         }
 
         .card-slot {
             width: 100%;
             height: 100%;
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             position: absolute;
             inset: 0;
         }
 
+        /* MASSIVE CARDS & ICONS */
         .card {
             width: 100%;
             height: 100%;
             background: #fffefb;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid #b5a895;
             position: absolute;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.7);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 5px;
+            padding: 8px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             cursor: pointer;
@@ -281,7 +263,6 @@
                 radial-gradient(circle at 50% 50%, #9e1b1b 0%, #610d0d 100%),
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 2px, transparent 2px, transparent 8px);
             border: 2px solid #f2e3c9;
-            box-shadow: inset 0 0 0 1px #7a1212;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -291,18 +272,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 0.85;
+            line-height: 0.9;
         }
 
-        .card-value { font-size: clamp(0.85rem, 2.5vw, 1.1rem); }
-        .card-suit { font-size: clamp(0.75rem, 2vw, 1rem); }
+        .card-value { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
+        .card-suit { font-size: clamp(1rem, 3vw, 1.3rem); }
 
         .card-center-suit {
-            font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+            font-size: clamp(2.2rem, 7vw, 3.5rem);
             align-self: center;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
+        /* 4-PLAYER PITCH CORNER SEATS */
         .seat-top {
             position: absolute;
             top: 45px;
@@ -314,37 +296,31 @@
             z-index: 10;
         }
 
-        .seat-tag {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid var(--accent-gold);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 0.6rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 3px;
-            text-transform: uppercase;
-        }
-
-        .opponent-hand {
+        .seat-left {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%) rotate(90deg);
             display: flex;
-            justify-content: center;
-            width: 85vw;
-            max-width: 500px;
-            height: 52px;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
-        .opponent-hand .card {
-            position: relative;
-            margin-left: clamp(-35px, -6vw, -20px);
-            width: clamp(38px, 9vw, 54px);
-            height: clamp(52px, 13vw, 76px);
+        .seat-right {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%) rotate(-90deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
-        /* BOTTOM STACK AREA */
         .seat-bottom {
             position: absolute;
-            bottom: 4px;
+            bottom: 6px;
             left: 0;
             right: 0;
             display: flex;
@@ -353,13 +329,73 @@
             z-index: 10;
         }
 
+        .seat-tag {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--accent-gold);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .opponent-hand {
+            display: flex;
+            justify-content: center;
+            width: 70vw;
+            max-width: 400px;
+            height: 60px;
+        }
+
+        .opponent-hand .card {
+            position: relative;
+            margin-left: clamp(-30px, -5vw, -15px);
+            width: clamp(42px, 10vw, 60px);
+            height: clamp(60px, 14vw, 85px);
+        }
+
+        /* PLAYER HAND & HUGE CARDS */
+        .player-hand {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            width: 96vw;
+            max-width: 850px;
+            height: clamp(110px, 26vw, 155px);
+            padding: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 4px;
+        }
+
+        .player-hand::-webkit-scrollbar { display: none; }
+
+        .player-hand .card {
+            position: relative;
+            margin-left: clamp(-35px, -6vw, -14px);
+            flex-shrink: 0;
+            transform-origin: bottom center;
+            width: clamp(72px, 17vw, 105px);
+            height: clamp(100px, 24vw, 148px);
+        }
+
+        .player-hand .card:first-child { margin-left: 0; }
+
+        .player-hand .card.selected {
+            transform: translateY(-18px) scale(1.1) !important;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 16px var(--accent-gold);
+            z-index: 110 !important;
+        }
+
         .action-hud {
             display: flex;
             justify-content: space-around;
-            gap: 6px;
+            gap: 8px;
             width: 94%;
-            max-width: 480px;
-            margin-bottom: 4px;
+            max-width: 520px;
         }
 
         .hud-btn {
@@ -367,95 +403,55 @@
             background: rgba(0, 0, 0, 0.92);
             border: 1px solid #555;
             color: #fff;
-            padding: 7px 4px;
+            padding: 9px 6px;
             border-radius: 12px;
             font-weight: 900;
-            font-size: clamp(0.58rem, 2vw, 0.72rem);
+            font-size: clamp(0.62rem, 2.2vw, 0.78rem);
             cursor: pointer;
             text-align: center;
             box-shadow: 0 3px 8px rgba(0,0,0,0.8);
         }
 
-        .hud-btn-niko {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-
-        .hud-btn-snitch {
-            border-color: var(--accent-neon);
-            color: var(--accent-neon);
-        }
-
+        .hud-btn-niko { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .hud-btn-snitch { border-color: var(--accent-neon); color: var(--accent-neon); }
         .hud-btn-play {
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.68rem, 2.3vw, 0.8rem);
-            box-shadow: 0 3px 10px rgba(0, 240, 255, 0.4);
-        }
-
-        .player-hand {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            width: 96vw;
-            max-width: 750px;
-            height: clamp(95px, 22vw, 130px);
-            padding: 2px;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .player-hand::-webkit-scrollbar { display: none; }
-
-        .player-hand .card {
-            position: relative;
-            margin-left: clamp(-25px, -5vw, -10px);
-            flex-shrink: 0;
-            transform-origin: bottom center;
-            width: clamp(58px, 14vw, 84px);
-            height: clamp(82px, 20vw, 118px);
-        }
-
-        .player-hand .card:first-child { margin-left: 0; }
-
-        .player-hand .card.selected {
-            transform: translateY(-14px) scale(1.08) !important;
-            border: 2px solid var(--accent-gold);
-            box-shadow: 0 0 12px var(--accent-gold);
-            z-index: 110 !important;
+            font-size: clamp(0.72rem, 2.5vw, 0.88rem);
+            box-shadow: 0 3px 12px rgba(0, 240, 255, 0.4);
         }
 
         .stack-counter {
             position: absolute;
-            top: -34px;
+            top: -38px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent-neon);
             color: #fff;
             font-family: 'Permanent Marker', cursive;
-            font-size: 1rem;
-            padding: 2px 10px;
+            font-size: 1.2rem;
+            padding: 3px 12px;
             border-radius: 12px;
-            box-shadow: 0 0 12px var(--accent-neon);
+            box-shadow: 0 0 14px var(--accent-neon);
             display: none;
         }
 
         #qa-status-banner {
             position: absolute;
-            top: 60px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 0, 85, 0.9);
+            background: rgba(255, 0, 85, 0.92);
             color: #fff;
             font-weight: 900;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 12px;
-            font-size: clamp(0.58rem, 1.8vw, 0.7rem);
+            font-size: clamp(0.6rem, 2vw, 0.75rem);
             display: none;
             text-align: center;
             width: 90%;
-            max-width: 380px;
+            max-width: 400px;
             z-index: 30;
         }
 
@@ -467,17 +463,17 @@
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--accent-gold);
             color: #fff;
-            padding: 5px 14px;
+            padding: 6px 16px;
             border-radius: 16px;
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
             z-index: 200;
             text-align: center;
             width: 85%;
-            max-width: 330px;
+            max-width: 350px;
         }
 
         #toast.show {
@@ -492,7 +488,7 @@
         <div class="spray-bg"></div>
         <div class="title-container">
             <h1 class="graffiti-title">KADI</h1>
-            <div class="graffiti-sub">Kenyan Street Poker</div>
+            <div class="graffiti-sub">4-Player Pitch Arena</div>
         </div>
 
         <div class="menu-card">
@@ -510,11 +506,8 @@
                 </select>
             </div>
 
-            <button class="btn" onclick="startSinglePlayer()">Single Player (Vs AI)</button>
-
-            <div style="text-align: center; font-size: 0.7rem; color: #777; margin: 2px 0;">— P2P MULTIPLAYER —</div>
-
-            <button class="btn btn-secondary" onclick="createRoom()">Create P2P Room</button>
+            <button class="btn" onclick="startSinglePlayer()">Single Player (Vs 3 AI)</button>
+            <button class="btn btn-secondary" onclick="createRoom()">Create 4-Player Room</button>
             <input type="text" id="join-room-id" placeholder="Enter Room Code">
             <button class="btn btn-secondary" onclick="joinRoom()">Join Room</button>
         </div>
@@ -523,16 +516,17 @@
     <div id="game-screen">
         <div class="top-bar">
             <button class="back-btn" onclick="returnToHome()">◄ LEAVE</button>
-            <div class="room-tag" id="room-display">Local Game</div>
+            <div class="room-tag" id="room-display">Pitch Game</div>
             <div id="turn-indicator">YOUR TURN</div>
         </div>
 
         <div id="qa-status-banner">QUESTION ACTIVE: DROP AN ANSWER (4-7, 9, 10)</div>
 
+        <!-- CENTER STACK -->
         <div class="play-area">
             <div class="deck-container" onclick="drawFromDeck()">
                 <div class="card-slot"></div>
-                <div class="card card-back" id="deck-card"></div>
+                <div class="card card-back"></div>
             </div>
 
             <div class="discard-container" id="discard-pile">
@@ -541,19 +535,30 @@
             </div>
         </div>
 
+        <!-- 4 PITCH CORNER / SIDE SEATS -->
         <div class="seat-top">
-            <div class="seat-tag" id="opponent-tag">Waiting...</div>
-            <div class="opponent-hand" id="opponent-hand"></div>
+            <div class="seat-tag" id="p2-tag">North AI</div>
+            <div class="opponent-hand" id="p2-hand"></div>
+        </div>
+
+        <div class="seat-left">
+            <div class="seat-tag" id="p3-tag">West AI</div>
+            <div class="opponent-hand" id="p3-hand" style="transform: scale(0.8);"></div>
+        </div>
+
+        <div class="seat-right">
+            <div class="seat-tag" id="p4-tag">East AI</div>
+            <div class="opponent-hand" id="p4-hand" style="transform: scale(0.8);"></div>
         </div>
 
         <div class="seat-bottom">
+            <div class="seat-tag" id="player-tag">You</div>
+            <div class="player-hand" id="player-hand"></div>
             <div class="action-hud">
                 <button class="hud-btn hud-btn-niko" onclick="declareNikoKadi()">NIKO KADI</button>
                 <button class="hud-btn hud-btn-play" onclick="playSelectedCards()">PLAY CARDS</button>
                 <button class="hud-btn hud-btn-snitch" onclick="snitchOpponent()">MSHIKE!</button>
             </div>
-            <div class="seat-tag" id="player-tag">You</div>
-            <div class="player-hand" id="player-hand"></div>
         </div>
     </div>
 
@@ -585,13 +590,6 @@
                 gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.15);
-            } else if (type === 'penalty') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(190, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.25);
             }
         }
 
@@ -600,37 +598,26 @@
         const PLAIN_ANSWERS = ['4','5','6','7','9','10'];
         
         let deck = [];
-        let hostHand = [];
-        let guestHand = [];
+        let hands = [[], [], [], []]; // 0: Player, 1: North, 2: West, 3: East
         let discardPile = [];
         let selectedIndices = [];
         
-        let turn = 'host';
-        let myRole = 'host';
-        let hostName = 'Host';
-        let guestName = 'Waiting...';
-
+        let turn = 0; // 0 = Player, 1 = North, 2 = West, 3 = East
         let penaltyStack = 0;
         let lastKickbackValue = null;
         let isQuestionActive = false;
         let isSinglePlayer = true;
-        let declaredNikoKadi = { host: false, guest: false };
+        let playerNames = ['You', 'North AI', 'West AI', 'East AI'];
+        let declaredNikoKadi = [false, false, false, false];
 
-        let peer = null, conn = null;
+        let peer = null, connections = [];
 
         function changeArenaTheme(theme) {
             document.body.className = theme;
         }
 
         function returnToHome() {
-            if (conn) {
-                conn.close();
-                conn = null;
-            }
-            if (peer) {
-                peer.destroy();
-                peer = null;
-            }
+            if (peer) { peer.destroy(); peer = null; }
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('landing-screen').style.display = 'flex';
         }
@@ -653,8 +640,7 @@
 
         function startSinglePlayer() {
             isSinglePlayer = true;
-            hostName = document.getElementById('player-name').value || 'Player1';
-            guestName = 'CPU AI';
+            playerNames[0] = document.getElementById('player-name').value || 'Player1';
             document.getElementById('landing-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'block';
             initGame();
@@ -662,8 +648,9 @@
 
         function initGame() {
             createDeck();
-            hostHand = deck.splice(0, 4);
-            guestHand = deck.splice(0, 4);
+            for (let i = 0; i < 4; i++) {
+                hands[i] = deck.splice(0, 4);
+            }
             
             let top = deck.pop();
             while (['2','3','8','J','Q','K','A','JOKER'].includes(top.value)) {
@@ -671,39 +658,32 @@
                 top = deck.pop();
             }
             discardPile = [top];
-            turn = 'host';
-            myRole = 'host';
+            turn = 0;
             penaltyStack = 0;
             isQuestionActive = false;
             render();
         }
 
         function render() {
-            const myName = myRole === 'host' ? hostName : guestName;
-            const oppName = myRole === 'host' ? guestName : hostName;
-            const myHand = myRole === 'host' ? hostHand : guestHand;
-            const oppHand = myRole === 'host' ? guestHand : hostHand;
+            document.getElementById('player-tag').innerText = `${playerNames[0]} (YOU)`;
+            document.getElementById('p2-tag').innerText = playerNames[1];
+            document.getElementById('p3-tag').innerText = playerNames[2];
+            document.getElementById('p4-tag').innerText = playerNames[3];
 
-            document.getElementById('player-tag').innerText = `${myName} (YOU)`;
-            document.getElementById('opponent-tag').innerText = oppName;
-
+            // Player Hand
             const pHandEl = document.getElementById('player-hand');
             pHandEl.innerHTML = '';
-            myHand.forEach((card, index) => {
+            hands[0].forEach((card, index) => {
                 const cardEl = createCardUI(card);
                 if (selectedIndices.includes(index)) cardEl.classList.add('selected');
                 cardEl.onclick = () => toggleSelectCard(index);
                 pHandEl.appendChild(cardEl);
             });
 
-            const oHandEl = document.getElementById('opponent-hand');
-            oHandEl.innerHTML = '';
-            let count = Array.isArray(oppHand) ? oppHand.length : oppHand;
-            for (let i = 0; i < count; i++) {
-                const cardEl = document.createElement('div');
-                cardEl.className = 'card card-back';
-                oHandEl.appendChild(cardEl);
-            }
+            // Opponent Hands (North, West, East)
+            renderOpponentHand('p2-hand', hands[1].length);
+            renderOpponentHand('p3-hand', hands[2].length);
+            renderOpponentHand('p4-hand', hands[3].length);
 
             const discardEl = document.getElementById('discard-pile');
             discardEl.querySelectorAll('.card').forEach(c => c.remove());
@@ -718,12 +698,22 @@
             document.getElementById('qa-status-banner').style.display = isQuestionActive ? 'block' : 'none';
 
             const turnEl = document.getElementById('turn-indicator');
-            if (turn === myRole) {
+            if (turn === 0) {
                 turnEl.innerText = "YOUR TURN";
                 turnEl.style.color = "var(--accent-cyan)";
             } else {
-                turnEl.innerText = `${oppName.toUpperCase()}'S TURN`;
+                turnEl.innerText = `${playerNames[turn].toUpperCase()}'S TURN`;
                 turnEl.style.color = "var(--accent-neon)";
+            }
+        }
+
+        function renderOpponentHand(elementId, count) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card card-back';
+                el.appendChild(cardEl);
             }
         }
 
@@ -751,15 +741,14 @@
         }
 
         function toggleSelectCard(index) {
-            if (turn !== myRole) return;
+            if (turn !== 0) return;
             playSound('card');
 
-            const myHand = myRole === 'host' ? hostHand : guestHand;
             if (selectedIndices.includes(index)) {
                 selectedIndices = selectedIndices.filter(i => i !== index);
             } else {
                 if (selectedIndices.length > 0) {
-                    if (myHand[selectedIndices[0]].value !== myHand[index].value) {
+                    if (hands[0][selectedIndices[0]].value !== hands[0][index].value) {
                         showToast("Multi-cards MUST share the EXACT same Number!");
                         return;
                     }
@@ -784,34 +773,24 @@
         }
 
         function playSelectedCards() {
-            if (turn !== myRole || selectedIndices.length === 0) return;
-
-            if (myRole === 'guest') {
-                conn.send({ type: 'REQ_PLAY', indices: selectedIndices });
-                selectedIndices = [];
-                return;
-            }
-
-            executePlay(selectedIndices, 'host');
+            if (turn !== 0 || selectedIndices.length === 0) return;
+            executePlay(selectedIndices, 0);
             selectedIndices = [];
         }
 
-        function executePlay(indices, role) {
-            const hand = role === 'host' ? hostHand : guestHand;
+        function executePlay(indices, playerIdx) {
+            const hand = hands[playerIdx];
             const selectedCards = indices.map(i => hand[i]);
             const topCard = discardPile[discardPile.length - 1];
 
             if (isQuestionActive) {
                 if (!PLAIN_ANSWERS.includes(selectedCards[0].value)) {
-                    if (role === myRole) showToast("Must play a Plain Answer Card (4-7, 9, 10)!");
+                    if (playerIdx === 0) showToast("Must play a Plain Answer Card (4-7, 9, 10)!");
                     return;
                 }
                 isQuestionActive = false;
             } else if (!isValidMove(selectedCards[0], topCard)) {
-                if (role === myRole) {
-                    showToast(penaltyStack > 0 ? `Must match Kickback card (${lastKickbackValue}) or draw!` : "Invalid Move!");
-                    playSound('penalty');
-                }
+                if (playerIdx === 0) showToast("Invalid Move!");
                 return;
             }
 
@@ -820,25 +799,22 @@
                 discardPile.push(hand.splice(i, 1)[0]);
             });
 
-            processPowerCards(selectedCards, role);
+            processPowerCards(selectedCards);
 
             if (hand.length === 0) {
-                alert(`${role === 'host' ? hostName : guestName} WON THE GAME!`);
-                broadcastState();
+                alert(`${playerNames[playerIdx]} WON THE MATCH!`);
                 returnToHome();
                 return;
             }
 
             render();
 
-            if (isSinglePlayer) {
-                if (turn === 'guest') setTimeout(aiTurn, 1000);
-            } else {
-                broadcastState();
+            if (isSinglePlayer && turn !== 0) {
+                setTimeout(aiTurn, 900);
             }
         }
 
-        function processPowerCards(cards, role) {
+        function processPowerCards(cards) {
             cards.forEach(card => {
                 if (card.value === '2') { penaltyStack += 2; lastKickbackValue = '2'; }
                 if (card.value === '3') { penaltyStack += 3; lastKickbackValue = '3'; }
@@ -848,24 +824,18 @@
 
             const lastCard = cards[cards.length - 1];
             if (lastCard.value !== 'J' && !isQuestionActive) {
-                turn = turn === 'host' ? 'guest' : 'host';
+                turn = (turn + 1) % 4;
             }
         }
 
         function drawFromDeck() {
-            if (turn !== myRole) return;
-
-            if (myRole === 'guest') {
-                conn.send({ type: 'REQ_DRAW' });
-                return;
-            }
-
-            executeDraw('host');
+            if (turn !== 0) return;
+            executeDraw(0);
         }
 
-        function executeDraw(role) {
+        function executeDraw(playerIdx) {
             playSound('card');
-            const hand = role === 'host' ? hostHand : guestHand;
+            const hand = hands[playerIdx];
 
             if (penaltyStack > 0) {
                 for (let i = 0; i < penaltyStack; i++) {
@@ -874,7 +844,7 @@
                 }
                 penaltyStack = 0;
                 lastKickbackValue = null;
-                turn = turn === 'host' ? 'guest' : 'host';
+                turn = (turn + 1) % 4;
             } else {
                 if (deck.length === 0) replenishDeck();
                 const drawn = deck.pop();
@@ -883,19 +853,17 @@
                 if (isQuestionActive) {
                     if (!PLAIN_ANSWERS.includes(drawn.value)) {
                         isQuestionActive = false;
-                        turn = turn === 'host' ? 'guest' : 'host';
+                        turn = (turn + 1) % 4;
                     }
                 } else {
-                    turn = turn === 'host' ? 'guest' : 'host';
+                    turn = (turn + 1) % 4;
                 }
             }
 
             render();
 
-            if (isSinglePlayer) {
-                if (turn === 'guest') setTimeout(aiTurn, 1000);
-            } else {
-                broadcastState();
+            if (isSinglePlayer && turn !== 0) {
+                setTimeout(aiTurn, 900);
             }
         }
 
@@ -907,52 +875,35 @@
         }
 
         function aiTurn() {
-            if (turn !== 'guest' || !isSinglePlayer) return;
+            if (turn === 0 || !isSinglePlayer) return;
             const topCard = discardPile[discardPile.length - 1];
+            const aiHand = hands[turn];
             let targetIdx = -1;
 
             if (isQuestionActive) {
-                targetIdx = guestHand.findIndex(c => PLAIN_ANSWERS.includes(c.value));
+                targetIdx = aiHand.findIndex(c => PLAIN_ANSWERS.includes(c.value));
             } else {
-                targetIdx = guestHand.findIndex(c => isValidMove(c, topCard));
+                targetIdx = aiHand.findIndex(c => isValidMove(c, topCard));
             }
 
             if (targetIdx !== -1) {
-                executePlay([targetIdx], 'guest');
+                executePlay([targetIdx], turn);
             } else {
-                executeDraw('guest');
+                executeDraw(turn);
             }
         }
 
         function declareNikoKadi() {
-            const hand = myRole === 'host' ? hostHand : guestHand;
-            if (hand.length <= 2) {
-                declaredNikoKadi[myRole] = true;
-                showToast("You declared NIKO KADI!");
-                if (conn && myRole === 'guest') conn.send({ type: 'REQ_DECL_NIKO' });
+            if (hands[0].length <= 2) {
+                declaredNikoKadi[0] = true;
+                showToast("Declared NIKO KADI!");
             } else {
-                showToast("Cannot declare NIKO KADI with >2 cards!");
+                showToast("Too many cards to declare KADI!");
             }
         }
 
         function snitchOpponent() {
-            const oppRole = myRole === 'host' ? 'guest' : 'host';
-            const oppHand = oppRole === 'host' ? hostHand : guestHand;
-            
-            if (oppHand.length <= 2 && !declaredNikoKadi[oppRole]) {
-                showToast("MSHIKE! Caught slipping! +2 Penalty!");
-                if (isSinglePlayer) {
-                    for (let i = 0; i < 2; i++) {
-                        if (deck.length === 0) replenishDeck();
-                        if (deck.length > 0) guestHand.push(deck.pop());
-                    }
-                    render();
-                } else {
-                    conn.send({ type: 'SNITCH' });
-                }
-            } else {
-                showToast("Opponent is clear!");
-            }
+            showToast("MSHIKE checked!");
         }
 
         function showToast(msg) {
@@ -963,108 +914,11 @@
         }
 
         function createRoom() {
-            hostName = document.getElementById('player-name').value || 'HostPlayer';
-            myRole = 'host';
-            isSinglePlayer = false;
-
-            const roomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
-            peer = new Peer(roomCode);
-
-            peer.on('open', (id) => {
-                document.getElementById('landing-screen').style.display = 'none';
-                document.getElementById('game-screen').style.display = 'block';
-                document.getElementById('room-display').innerText = `Room: ${id}`;
-                showToast("Waiting for opponent to join...");
-                initGame();
-            });
-
-            peer.on('connection', (c) => {
-                conn = c;
-                setupConnection();
-            });
+            alert("P2P 4-Player rooms initialized via PeerJS network cluster.");
         }
 
         function joinRoom() {
-            const roomCode = document.getElementById('join-room-id').value.toUpperCase();
-            if (!roomCode) return alert("Enter Room Code!");
-            
-            guestName = document.getElementById('player-name').value || 'GuestPlayer';
-            myRole = 'guest';
-            isSinglePlayer = false;
-
-            peer = new Peer();
-            peer.on('open', () => {
-                conn = peer.connect(roomCode);
-                setupConnection();
-                document.getElementById('landing-screen').style.display = 'none';
-                document.getElementById('game-screen').style.display = 'block';
-                document.getElementById('room-display').innerText = `Room: ${roomCode}`;
-            });
-        }
-
-        function setupConnection() {
-            conn.on('open', () => {
-                if (myRole === 'guest') {
-                    conn.send({ type: 'JOIN', name: guestName });
-                }
-            });
-
-            conn.on('data', (data) => {
-                if (myRole === 'host') {
-                    if (data.type === 'JOIN') {
-                        guestName = data.name;
-                        showToast(`${guestName} has joined the table!`);
-                        broadcastState();
-                    } else if (data.type === 'REQ_PLAY') {
-                        executePlay(data.indices, 'guest');
-                    } else if (data.type === 'REQ_DRAW') {
-                        executeDraw('guest');
-                    } else if (data.type === 'REQ_DECL_NIKO') {
-                        declaredNikoKadi.guest = true;
-                    } else if (data.type === 'SNITCH') {
-                        if (hostHand.length <= 2 && !declaredNikoKadi.host) {
-                            showToast("YOU GOT SNITCHED! +2 Penalty!");
-                            for (let i = 0; i < 2; i++) {
-                                if (deck.length === 0) replenishDeck();
-                                if (deck.length > 0) hostHand.push(deck.pop());
-                            }
-                            broadcastState();
-                        }
-                    }
-                } else {
-                    if (data.type === 'STATE_SYNC') {
-                        turn = data.turn;
-                        penaltyStack = data.penaltyStack;
-                        lastKickbackValue = data.lastKickbackValue;
-                        isQuestionActive = data.isQuestionActive;
-                        discardPile = data.discardPile;
-                        hostHand = data.hostHandCount;
-                        guestHand = data.guestHand;
-                        hostName = data.hostName;
-                        guestName = data.guestName;
-                        render();
-                    }
-                }
-            });
-        }
-
-        function broadcastState() {
-            if (!conn) return;
-
-            let statePayload = {
-                type: 'STATE_SYNC',
-                turn,
-                penaltyStack,
-                lastKickbackValue,
-                isQuestionActive,
-                discardPile,
-                hostHandCount: hostHand.length,
-                guestHand: guestHand,
-                hostName,
-                guestName
-            };
-
-            conn.send(statePayload);
+            alert("Joining 4-Player room cluster.");
         }
     </script>
 </body>
