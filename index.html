@@ -197,6 +197,27 @@
             z-index: 10;
         }
 
+        .back-btn {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-neon);
+            color: var(--accent-neon);
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+            background: var(--accent-neon);
+            color: #000;
+        }
+
         .room-tag {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -507,6 +528,7 @@
 
     <div id="game-screen">
         <div class="top-bar">
+            <button class="back-btn" onclick="returnToHome()">◄ LEAVE</button>
             <div class="room-tag" id="room-display">Local Game</div>
             <div id="turn-indicator">YOUR TURN</div>
         </div>
@@ -605,6 +627,19 @@
 
         function changeArenaTheme(theme) {
             document.body.className = theme;
+        }
+
+        function returnToHome() {
+            if (conn) {
+                conn.close();
+                conn = null;
+            }
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('landing-screen').style.display = 'flex';
         }
 
         function createDeck() {
@@ -797,7 +832,7 @@
             if (hand.length === 0) {
                 alert(`${role === 'host' ? hostName : guestName} WON THE GAME!`);
                 broadcastState();
-                location.reload();
+                returnToHome();
                 return;
             }
 
