@@ -189,7 +189,7 @@
 
         .top-bar {
             position: absolute;
-            top: 10px;
+            top: 8px;
             left: 10px;
             right: 10px;
             display: flex;
@@ -202,10 +202,10 @@
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--accent-neon);
             color: var(--accent-neon);
-            padding: 6px 14px;
-            border-radius: 16px;
+            padding: 5px 12px;
+            border-radius: 14px;
             font-weight: 900;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: 0.2s;
             display: flex;
@@ -213,43 +213,37 @@
             gap: 4px;
         }
 
-        .back-btn:active {
-            transform: scale(0.95);
-            background: var(--accent-neon);
-            color: #000;
-        }
-
         .room-tag {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 12px;
-            border-radius: 16px;
+            padding: 5px 10px;
+            border-radius: 14px;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--accent-gold);
         }
 
         #turn-indicator {
             font-weight: 900;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--accent-cyan);
         }
 
         .play-area {
             position: absolute;
-            top: 38%;
+            top: 36%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 20px;
+            gap: 16px;
             align-items: center;
             z-index: 5;
         }
 
         .deck-container, .discard-container {
             position: relative;
-            width: clamp(75px, 20vw, 110px);
-            height: clamp(105px, 28vw, 154px);
+            width: clamp(70px, 18vw, 95px);
+            height: clamp(98px, 25vw, 133px);
         }
 
         .card-slot {
@@ -268,11 +262,11 @@
             border-radius: 10px;
             border: 1px solid #b5a895;
             position: absolute;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.7);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 6px;
+            padding: 5px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             cursor: pointer;
@@ -300,17 +294,20 @@
             line-height: 0.85;
         }
 
-        .card-value { font-size: clamp(0.9rem, 2.8vw, 1.25rem); }
-        .card-suit { font-size: clamp(0.8rem, 2.2vw, 1.1rem); }
+        .card-value { font-size: clamp(0.85rem, 2.5vw, 1.1rem); }
+        .card-suit { font-size: clamp(0.75rem, 2vw, 1rem); }
 
         .card-center-suit {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-size: clamp(1.5rem, 4.5vw, 2.4rem);
             align-self: center;
             opacity: 0.9;
         }
 
-        .seat {
+        .seat-top {
             position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -320,118 +317,63 @@
         .seat-tag {
             background: rgba(0, 0, 0, 0.85);
             border: 1px solid var(--accent-gold);
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.6rem;
             font-weight: 900;
             color: #fff;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .seat-top {
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .seat-bottom {
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            align-items: center;
-        }
-
-        .player-hand {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            width: 96vw;
-            max-width: 800px;
-            height: clamp(110px, 26vw, 150px);
-            padding: 5px;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .player-hand::-webkit-scrollbar { display: none; }
-
-        .player-hand .card {
-            position: relative;
-            margin-left: clamp(-30px, -6vw, -12px);
-            flex-shrink: 0;
-            transform-origin: bottom center;
-            width: clamp(65px, 16vw, 95px);
-            height: clamp(90px, 22vw, 135px);
-        }
-
-        .player-hand .card:first-child { margin-left: 0; }
-
-        .player-hand .card.selected {
-            transform: translateY(-16px) scale(1.1) !important;
-            border: 2px solid var(--accent-gold);
-            box-shadow: 0 0 15px var(--accent-gold);
-            z-index: 110 !important;
         }
 
         .opponent-hand {
             display: flex;
             justify-content: center;
-            width: 90vw;
-            max-width: 600px;
-            height: 60px;
+            width: 85vw;
+            max-width: 500px;
+            height: 52px;
         }
 
         .opponent-hand .card {
             position: relative;
-            margin-left: clamp(-40px, -7vw, -22px);
-            width: clamp(42px, 10vw, 60px);
-            height: clamp(58px, 14vw, 85px);
+            margin-left: clamp(-35px, -6vw, -20px);
+            width: clamp(38px, 9vw, 54px);
+            height: clamp(52px, 13vw, 76px);
         }
 
-        .stack-counter {
+        /* BOTTOM STACK AREA */
+        .seat-bottom {
             position: absolute;
-            top: -38px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-neon);
-            color: #fff;
-            font-family: 'Permanent Marker', cursive;
-            font-size: 1.1rem;
-            padding: 2px 12px;
-            border-radius: 14px;
-            box-shadow: 0 0 15px var(--accent-neon);
-            display: none;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
         .action-hud {
-            position: absolute;
-            bottom: 8px;
-            left: 10px;
-            right: 10px;
             display: flex;
             justify-content: space-around;
             gap: 6px;
-            z-index: 20;
-            max-width: 500px;
-            margin: 0 auto;
+            width: 94%;
+            max-width: 480px;
+            margin-bottom: 4px;
         }
 
         .hud-btn {
             flex: 1;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
             border: 1px solid #555;
             color: #fff;
-            padding: 8px 4px;
-            border-radius: 16px;
+            padding: 7px 4px;
+            border-radius: 12px;
             font-weight: 900;
-            font-size: clamp(0.6rem, 2.2vw, 0.78rem);
+            font-size: clamp(0.58rem, 2vw, 0.72rem);
             cursor: pointer;
-            backdrop-filter: blur(6px);
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.8);
         }
 
         .hud-btn-niko {
@@ -448,48 +390,94 @@
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
-            box-shadow: 0 4px 12px rgba(0, 240, 255, 0.4);
+            font-size: clamp(0.68rem, 2.3vw, 0.8rem);
+            box-shadow: 0 3px 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .player-hand {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            width: 96vw;
+            max-width: 750px;
+            height: clamp(95px, 22vw, 130px);
+            padding: 2px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .player-hand::-webkit-scrollbar { display: none; }
+
+        .player-hand .card {
+            position: relative;
+            margin-left: clamp(-25px, -5vw, -10px);
+            flex-shrink: 0;
+            transform-origin: bottom center;
+            width: clamp(58px, 14vw, 84px);
+            height: clamp(82px, 20vw, 118px);
+        }
+
+        .player-hand .card:first-child { margin-left: 0; }
+
+        .player-hand .card.selected {
+            transform: translateY(-14px) scale(1.08) !important;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 12px var(--accent-gold);
+            z-index: 110 !important;
+        }
+
+        .stack-counter {
+            position: absolute;
+            top: -34px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-neon);
+            color: #fff;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px var(--accent-neon);
+            display: none;
         }
 
         #qa-status-banner {
             position: absolute;
-            top: 70px;
+            top: 60px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 0, 85, 0.9);
             color: #fff;
             font-weight: 900;
-            padding: 5px 14px;
-            border-radius: 14px;
-            font-size: clamp(0.6rem, 2vw, 0.75rem);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: clamp(0.58rem, 1.8vw, 0.7rem);
             display: none;
             text-align: center;
             width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 15px rgba(255,0,85,0.6);
+            max-width: 380px;
             z-index: 30;
         }
 
         #toast {
             position: absolute;
-            top: 55px;
+            top: 48px;
             left: 50%;
             transform: translateX(-50%) translateY(-20px);
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--accent-gold);
             color: #fff;
-            padding: 6px 16px;
-            border-radius: 18px;
+            padding: 5px 14px;
+            border-radius: 16px;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
             z-index: 200;
             text-align: center;
             width: 85%;
-            max-width: 350px;
+            max-width: 330px;
         }
 
         #toast.show {
@@ -553,20 +541,19 @@
             </div>
         </div>
 
-        <div class="seat seat-top">
+        <div class="seat-top">
             <div class="seat-tag" id="opponent-tag">Waiting...</div>
             <div class="opponent-hand" id="opponent-hand"></div>
         </div>
 
-        <div class="seat seat-bottom">
+        <div class="seat-bottom">
+            <div class="action-hud">
+                <button class="hud-btn hud-btn-niko" onclick="declareNikoKadi()">NIKO KADI</button>
+                <button class="hud-btn hud-btn-play" onclick="playSelectedCards()">PLAY CARDS</button>
+                <button class="hud-btn hud-btn-snitch" onclick="snitchOpponent()">MSHIKE!</button>
+            </div>
             <div class="seat-tag" id="player-tag">You</div>
             <div class="player-hand" id="player-hand"></div>
-        </div>
-
-        <div class="action-hud">
-            <button class="hud-btn hud-btn-niko" onclick="declareNikoKadi()">NIKO KADI</button>
-            <button class="hud-btn hud-btn-play" onclick="playSelectedCards()">PLAY CARDS</button>
-            <button class="hud-btn hud-btn-snitch" onclick="snitchOpponent()">MSHIKE!</button>
         </div>
     </div>
 
