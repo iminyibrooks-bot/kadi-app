@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>KADI — Authentic Kenyan Street Rules</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
@@ -44,6 +44,7 @@
             color: #fff;
             overflow: hidden;
             height: 100vh;
+            height: 100dvh;
             width: 100vw;
         }
 
@@ -165,6 +166,7 @@
             display: none;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             position: relative;
             background: var(--bg-arena);
             box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.95);
@@ -173,9 +175,9 @@
 
         .top-bar {
             position: absolute;
-            top: 8px;
-            left: 10px;
-            right: 10px;
+            top: 10px;
+            left: 12px;
+            right: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -186,33 +188,33 @@
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--accent-neon);
             color: var(--accent-neon);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 14px;
             font-weight: 900;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
         }
 
         .room-tag {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 14px;
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--accent-gold);
         }
 
         #turn-indicator {
             font-weight: 900;
-            font-size: 0.78rem;
+            font-size: 0.82rem;
             color: var(--accent-cyan);
         }
 
         /* PLAY AREA */
         .play-area {
             position: absolute;
-            top: 44%;
+            top: 42%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -223,15 +225,15 @@
 
         .deck-container, .discard-container {
             position: relative;
-            width: clamp(75px, 18vw, 95px);
-            height: clamp(105px, 25vw, 133px);
+            width: clamp(80px, 18vw, 105px);
+            height: clamp(115px, 26vw, 150px);
         }
 
         .card-slot {
             width: 100%;
             height: 100%;
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             position: absolute;
             inset: 0;
         }
@@ -240,14 +242,14 @@
             width: 100%;
             height: 100%;
             background: #fffefb;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid #b5a895;
             position: absolute;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.8);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.85);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 6px;
+            padding: 8px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             cursor: pointer;
@@ -271,14 +273,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 0.85;
+            line-height: 0.9;
         }
 
-        .card-value { font-size: clamp(0.9rem, 3vw, 1.2rem); }
-        .card-suit { font-size: clamp(0.8rem, 2.5vw, 1rem); }
+        .card-value { font-size: clamp(1.1rem, 3.5vw, 1.4rem); }
+        .card-suit { font-size: clamp(1rem, 3vw, 1.2rem); }
 
         .card-center-suit {
-            font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+            font-size: clamp(2.2rem, 6.5vw, 3.2rem);
             align-self: center;
             opacity: 0.95;
         }
@@ -286,7 +288,7 @@
         /* OPPONENT SEAT (TOP) */
         .seat-top {
             position: absolute;
-            top: 45px;
+            top: 50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -298,12 +300,12 @@
         .seat-tag {
             background: rgba(0, 0, 0, 0.85);
             border: 1px solid var(--accent-gold);
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 8px;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             font-weight: 900;
             color: #fff;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
@@ -317,15 +319,15 @@
 
         .opponent-hand .card {
             position: relative;
-            margin-left: clamp(-28px, -5vw, -12px);
+            margin-left: clamp(-28px, -4.5vw, -12px);
             width: clamp(38px, 9vw, 52px);
             height: clamp(52px, 13vw, 72px);
         }
 
-        /* PLAYER SEAT (BOTTOM) — STRICT STACK ORDER: Cards above, HUD below */
+        /* PLAYER SEAT (BOTTOM) — ANCHORED SAFELY ABOVE PHONE NAV BAR */
         .seat-bottom {
             position: absolute;
-            bottom: 6px;
+            bottom: max(28px, env(safe-area-inset-bottom) + 16px);
             left: 0;
             right: 0;
             display: flex;
@@ -340,53 +342,53 @@
             align-items: flex-end;
             width: 96vw;
             max-width: 800px;
-            height: clamp(100px, 24vw, 140px);
-            padding: 2px;
+            height: clamp(120px, 26vw, 155px);
+            padding: 4px;
             overflow-x: auto;
             scrollbar-width: none;
-            margin-bottom: 4px;
+            margin-bottom: 10px;
         }
 
         .player-hand::-webkit-scrollbar { display: none; }
 
         .player-hand .card {
             position: relative;
-            margin-left: clamp(-30px, -5.5vw, -12px);
+            margin-left: clamp(-32px, -6vw, -14px);
             flex-shrink: 0;
             transform-origin: bottom center;
-            width: clamp(65px, 15vw, 95px);
-            height: clamp(90px, 22vw, 132px);
+            width: clamp(75px, 16vw, 102px);
+            height: clamp(105px, 23vw, 145px);
         }
 
         .player-hand .card:first-child { margin-left: 0; }
 
         .player-hand .card.selected {
-            transform: translateY(-16px) scale(1.08) !important;
+            transform: translateY(-22px) scale(1.1) !important;
             border: 2px solid var(--accent-gold);
-            box-shadow: 0 0 14px var(--accent-gold);
+            box-shadow: 0 0 16px var(--accent-gold);
             z-index: 110 !important;
         }
 
         .action-hud {
             display: flex;
             justify-content: space-around;
-            gap: 6px;
+            gap: 10px;
             width: 94%;
-            max-width: 480px;
+            max-width: 500px;
         }
 
         .hud-btn {
             flex: 1;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.95);
             border: 1px solid #555;
             color: #fff;
-            padding: 8px 4px;
-            border-radius: 12px;
+            padding: 11px 6px;
+            border-radius: 14px;
             font-weight: 900;
-            font-size: clamp(0.6rem, 2vw, 0.74rem);
+            font-size: clamp(0.7rem, 2.2vw, 0.82rem);
             cursor: pointer;
             text-align: center;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.85);
         }
 
         .hud-btn-niko { border-color: var(--accent-gold); color: var(--accent-gold); }
@@ -395,22 +397,22 @@
             background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
             border: none;
             color: #000;
-            font-size: clamp(0.7rem, 2.4vmax, 0.82rem);
-            box-shadow: 0 3px 10px rgba(0, 240, 255, 0.4);
+            font-size: clamp(0.8rem, 2.6vw, 0.94rem);
+            box-shadow: 0 4px 14px rgba(0, 240, 255, 0.5);
         }
 
         .stack-counter {
             position: absolute;
-            top: -34px;
+            top: -38px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent-neon);
             color: #fff;
             font-family: 'Permanent Marker', cursive;
-            font-size: 1.1rem;
-            padding: 2px 10px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px var(--accent-neon);
+            font-size: 1.2rem;
+            padding: 3px 12px;
+            border-radius: 14px;
+            box-shadow: 0 0 14px var(--accent-neon);
             display: none;
         }
 
@@ -419,38 +421,38 @@
             top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 0, 85, 0.9);
+            background: rgba(255, 0, 85, 0.92);
             color: #fff;
             font-weight: 900;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 12px;
-            font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+            font-size: clamp(0.65rem, 2vw, 0.78rem);
             display: none;
             text-align: center;
             width: 90%;
-            max-width: 380px;
+            max-width: 400px;
             z-index: 30;
         }
 
         #toast {
             position: absolute;
-            top: 48px;
+            top: 52px;
             left: 50%;
             transform: translateX(-50%) translateY(-20px);
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--accent-gold);
             color: #fff;
-            padding: 5px 14px;
+            padding: 6px 16px;
             border-radius: 16px;
             font-weight: 700;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
             z-index: 200;
             text-align: center;
             width: 85%;
-            max-width: 330px;
+            max-width: 350px;
         }
 
         #toast.show {
@@ -519,7 +521,7 @@
             <div class="opponent-hand" id="opponent-hand"></div>
         </div>
 
-        <!-- STRICT DOM LAYOUT: Cards above action HUD buttons -->
+        <!-- ANCHORED ABOVE PHONE NAV BAR -->
         <div class="seat-bottom">
             <div class="seat-tag" id="player-tag">You</div>
             <div class="player-hand" id="player-hand"></div>
@@ -574,7 +576,7 @@
         const PLAIN_ANSWERS = ['4','5','6','7','9','10'];
         
         let deck = [];
-        let players = []; // Array of { id, name, hand, isAi }
+        let players = [];
         let myPlayerIndex = 0;
         let discardPile = [];
         let selectedIndices = [];
@@ -977,7 +979,7 @@
                             players.push({ id: conn.peer, name: data.name, hand: [], isAi: false });
                             declaredNikoKadi[conn.peer] = false;
                             showToast(`${data.name} joined the table! (${players.length}/4)`);
-                            initGame(); // Re-deal for new player count
+                            initGame();
                             broadcastState();
                         }
                     } else if (data.type === 'REQ_PLAY') {
